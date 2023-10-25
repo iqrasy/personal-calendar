@@ -1,24 +1,21 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import GlobalStyle from "./Globalstyle";
+import getMonth from "./GetMonth";
+import Month from "./Month";
+import Sidebar from "./Sidebar";
 
 const App = () => {
-	// const getData = async () => {
-	// 	const userEmail = "iqra@test.com";
-	// 	try {
-	// 		const response = await fetch(`http://localhost:8000/todo/${userEmail}`);
-	// 		const json = await response.json();
-	// 	} catch (error) {
-	// 		console.log(error);
-	// 	}
-	// };
-
-	// useEffect(() => getData, []);
+	const [currentMonth, setCurrentMonth] = useState(getMonth());
+	// console.log(getMonth());
 
 	return (
-		<div>
-			<GlobalStyle />
-			App
-		</div>
+		<>
+			<div>
+				<GlobalStyle />
+				<Month month={currentMonth} />
+				<Sidebar />
+			</div>
+		</>
 	);
 };
 
