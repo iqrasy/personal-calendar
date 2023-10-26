@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { BiRightArrow, BiLeftArrow } from "react-icons/bi";
 
 const Header = () => {
 	return (
@@ -8,7 +9,12 @@ const Header = () => {
 			<button>week</button>
 			<button>month</button>
 			<button>Year</button>
-			<button>Today</button>
+			<button>
+				<BiLeftArrow />
+			</button>
+			<button>
+				<BiRightArrow />
+			</button>
 		</Div>
 	);
 };

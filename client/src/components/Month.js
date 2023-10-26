@@ -9,7 +9,7 @@ const Month = ({ month }) => {
 	return (
 		<First>
 			<Side>
-				<Sidebar />
+				<Sidebar month={month} />
 			</Side>
 			<Div>
 				{month.map((item, i) => (

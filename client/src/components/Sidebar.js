@@ -1,8 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 
-const Sidebar = () => {
-	return <Main>sidebar</Main>;
+const Sidebar = ({ month }) => {
+	// console.log(month);
+	return (
+		<Main>
+			<button>Today</button>
+		</Main>
+	);
 };
 
 export default Sidebar;
