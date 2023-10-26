@@ -3,18 +3,17 @@ import GlobalStyle from "./Globalstyle";
 import getMonth from "./GetMonth";
 import Month from "./Month";
 import Sidebar from "./Sidebar";
+import Header from "./Header"
 
 const App = () => {
 	const [currentMonth, setCurrentMonth] = useState(getMonth());
-	// console.log(getMonth());
 
 	return (
 		<>
-			<div>
-				<GlobalStyle />
-				<Month month={currentMonth} />
-				<Sidebar />
-			</div>
+			<GlobalStyle />
+			<Header />
+			<Month month={currentMonth} />
+			{/* <Sidebar /> */}
 		</>
 	);
 };
