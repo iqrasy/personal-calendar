@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { BiRightArrow, BiLeftArrow } from "react-icons/bi";
+import styled from "styled-components";
 import GlobalContext from "./context/Context";
 import dayjs from "dayjs";
 import getMonth from "./GetMonth";
@@ -7,7 +8,10 @@ import getMonth from "./GetMonth";
 const Calendar = () => {
 	const [currentMonthIndex, setCurrentMonthIndex] = useState(dayjs().month());
 	const [currentMonth, setCurrentMonth] = useState(getMonth());
-	const { monthIndex } = useContext(GlobalContext);
+	const [clickedButtons, setClickedButtons] = useState([]);
+	const [selectedButton, setSelectedButton] = useState(null);
+	const { monthIndex, setSmallCalendar, selectedDay, setSelectedDay } =
+		useContext(GlobalContext);
 
 	useEffect(() => {
 		setCurrentMonthIndex(monthIndex);
@@ -23,6 +27,18 @@ const Calendar = () => {
 
 	const handleNextMonth = () => {
 		setCurrentMonthIndex(currentMonthIndex + 1);
+	};
+
+	const toggleButton = (day) => {
+		if (selectedButton === day.format("DD-MM-YY")) {
+			setSelectedButton(null);
+			setClickedButtons((prev) =>
+				prev.filter((date) => date !== day.format("DD-MM-YY"))
+			);
+		} else {
+			setSelectedButton(day.format("DD-MM-YY"));
+			setClickedButtons((prev) => [day.format("DD-MM-YY")]);
+		}
 	};
 
 	return (
@@ -43,9 +59,30 @@ const Calendar = () => {
 				{currentMonth.map((calendar, i) => (
 					<div key={i}>
 						{calendar.map((day, id) => (
-							<button key={id}>
-								<span>{day.format("D")}</span>
-							</button>
+							<div key={id}>
+								{day.format("DD-MM-YY") === dayjs().format("DD-MM-YY") ? (
+									<button style={{ backgroundColor: "blue", color: "white" }}>
+										<p>{day.format("D")}</p>
+									</button>
+								) : (
+									<Div>
+										<button
+											className={
+												selectedButton === day.format("DD-MM-YY")
+													? "light-blue-background"
+													: ""
+											}
+											onClick={() => {
+												setSmallCalendar(currentMonthIndex);
+												setSelectedDay(day);
+												toggleButton(day);
+											}}
+										>
+											<p>{day.format("D")}</p>
+										</button>
+									</Div>
+								)}
+							</div>
 						))}
 					</div>
 				))}
@@ -55,3 +92,10 @@ const Calendar = () => {
 };
 
 export default Calendar;
+
+const Div = styled.button`
+	.light-blue-background {
+		background-color: lightblue;
+		color: white;
+	}
+`;
