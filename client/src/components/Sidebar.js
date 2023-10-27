@@ -1,11 +1,24 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
+import GlobalContext from "./context/Context";
+import dayjs from "dayjs";
+import Calendar from "./Calendar";
 
-const Sidebar = ({ month }) => {
+const Sidebar = () => {
+	const { monthIndex, setMonthIndex } = useContext(GlobalContext);
+
+	const handleReset = () => {
+		setMonthIndex(
+			monthIndex === dayjs().month()
+				? monthIndex + Math.random()
+				: dayjs().month()
+		);
+	};
 	// console.log(month);
 	return (
 		<Main>
-			<button>Today</button>
+			<button onClick={handleReset}>Today</button>
+			<Calendar />
 		</Main>
 	);
 };

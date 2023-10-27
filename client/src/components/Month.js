@@ -5,11 +5,12 @@ import Sidebar from "./Sidebar";
 
 const Month = ({ month }) => {
 	// const isToday = day.isSame(dayjs(), "day");
+	console.log(month);
 
 	return (
 		<First>
 			<Side>
-				<Sidebar month={month} />
+				<Sidebar />
 			</Side>
 			<Div>
 				{month.map((item, i) => (
