@@ -7,7 +7,7 @@ const pool = new Pool({
 	password: PASSWORD,
 	host: HOST,
 	port: DBPORT,
-	database: "todoapp",
+	database: "calendar",
 });
 
 module.exports = pool;

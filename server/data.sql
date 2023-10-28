@@ -12,7 +12,6 @@ CREATE TABLE events (
     user_id INT REFERENCES users(id)
 );
 
-
 CREATE TABLE repeat_options (
     id SERIAL PRIMARY KEY,
     option_name VARCHAR(50) NOT NULL

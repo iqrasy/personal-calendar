@@ -3,6 +3,7 @@ import styled from "styled-components";
 import GlobalContext from "./context/Context";
 import dayjs from "dayjs";
 import Calendar from "./Calendar";
+import Events from "./Events";
 
 const Sidebar = () => {
 	const { monthIndex, setMonthIndex } = useContext(GlobalContext);
@@ -18,6 +19,7 @@ const Sidebar = () => {
 	return (
 		<Main>
 			<button onClick={handleReset}>Today</button>
+			<Events />
 			<Calendar />
 		</Main>
 	);
