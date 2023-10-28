@@ -14,7 +14,7 @@ const Sidebar = () => {
 				: dayjs().month()
 		);
 	};
-	// console.log(month);
+
 	return (
 		<Main>
 			<button onClick={handleReset}>Today</button>
@@ -26,7 +26,5 @@ const Sidebar = () => {
 export default Sidebar;
 
 const Main = styled.div`
-	/* border: solid pink 1px; */
-	/* width: 10rem; */
-	/* height: 25rem; */
+	display: block;
 `;

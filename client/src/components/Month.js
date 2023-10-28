@@ -4,9 +4,6 @@ import dayjs from "dayjs";
 import Sidebar from "./Sidebar";
 
 const Month = ({ month }) => {
-	// const isToday = day.isSame(dayjs(), "day");
-	console.log(month);
-
 	return (
 		<First>
 			<Side>
@@ -54,16 +51,11 @@ const Blue = styled.div`
 		justify-content: center;
 		z-index: 10;
 	}
-	/* border: solid blue 1px;
-	width: 1.4rem;
-	height: 1.4rem;
-	z-index: 10;
-	border-radius: 3rem; */
 `;
 
 const Side = styled.div`
 	min-height: 20rem;
-	width: 10rem;
+	width: 15rem;
 	border: solid pink 1px;
 	margin-left: 0.4rem;
 `;
@@ -77,7 +69,7 @@ const Main = styled.div`
 	display: grid;
 	grid-template-columns: repeat(7, 1fr);
 	height: 10.5rem;
-	min-width: 70rem;
+	min-width: 68rem;
 	margin-right: 0.5rem;
 	flex-grow: 1;
 	flex-direction: column;

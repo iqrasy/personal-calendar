@@ -8,8 +8,6 @@ import getMonth from "./GetMonth";
 const Calendar = () => {
 	const [currentMonthIndex, setCurrentMonthIndex] = useState(dayjs().month());
 	const [currentMonth, setCurrentMonth] = useState(getMonth());
-	const [clickedButtons, setClickedButtons] = useState([]);
-	const [selectedButton, setSelectedButton] = useState(null);
 	const { monthIndex, setSmallCalendar, selectedDay, setSelectedDay } =
 		useContext(GlobalContext);
 
@@ -30,34 +28,43 @@ const Calendar = () => {
 	};
 
 	const toggleButton = (day) => {
-		if (selectedButton === day.format("DD-MM-YY")) {
-			setSelectedButton(null);
-			setClickedButtons((prev) =>
-				prev.filter((date) => date !== day.format("DD-MM-YY"))
-			);
+		const today = day.format("DD-MM-YY");
+		const daySelected = selectedDay && selectedDay.format("DD-MM-YY");
+
+		if (today === daySelected) {
+			return <div style={{ backgroundColor: "blue", color: "white" }}></div>;
 		} else {
-			setSelectedButton(day.format("DD-MM-YY"));
-			setClickedButtons((prev) => [day.format("DD-MM-YY")]);
+			return "";
 		}
 	};
 
 	return (
 		<div>
-			<p>
-				{dayjs(new Date(dayjs().year(), currentMonthIndex)).format("MMMM YYYY")}
-			</p>
-			<button onClick={handlePrevMonth}>
-				<BiLeftArrow />
-			</button>
-			<button onClick={handleNextMonth}>
-				<BiRightArrow />
-			</button>
-			<div>
-				{currentMonth[0].map((item, i) => (
-					<span key={i}>{item.format("dd").charAt(0)}</span>
-				))}
+			<Cal>
+				<Span>
+					<Button>
+						<button onClick={handlePrevMonth}>
+							<BiLeftArrow />
+						</button>
+						<p style={{ fontSize: "1.1rem" }}>
+							{dayjs(new Date(dayjs().year(), currentMonthIndex)).format(
+								"MMMM YYYY"
+							)}
+						</p>
+						<button onClick={handleNextMonth}>
+							<BiRightArrow />
+						</button>
+					</Button>
+					<div style={{ display: "flex", justifyContent: "space-between" }}>
+						{currentMonth[0].map((item, i) => (
+							<p key={i} style={{ marginBottom: "1rem" }}>
+								{item.format("dd").charAt(0)}
+							</p>
+						))}
+					</div>
+				</Span>
 				{currentMonth.map((calendar, i) => (
-					<div key={i}>
+					<Div key={i}>
 						{calendar.map((day, id) => (
 							<div key={id}>
 								{day.format("DD-MM-YY") === dayjs().format("DD-MM-YY") ? (
@@ -65,37 +72,65 @@ const Calendar = () => {
 										<p>{day.format("D")}</p>
 									</button>
 								) : (
-									<Div>
+									<div>
 										<button
-											className={
-												selectedButton === day.format("DD-MM-YY")
-													? "light-blue-background"
-													: ""
-											}
+											style={{
+												backgroundColor: toggleButton(day)
+													? "blue"
+													: "transparent",
+											}}
 											onClick={() => {
 												setSmallCalendar(currentMonthIndex);
 												setSelectedDay(day);
-												toggleButton(day);
 											}}
 										>
 											<p>{day.format("D")}</p>
 										</button>
-									</Div>
+									</div>
 								)}
 							</div>
 						))}
-					</div>
+					</Div>
 				))}
-			</div>
+			</Cal>
 		</div>
 	);
 };
 
 export default Calendar;
 
-const Div = styled.button`
-	.light-blue-background {
-		background-color: lightblue;
-		color: white;
+const Div = styled.div`
+	display: grid;
+	grid-template-columns: repeat(7, 1fr);
+	grid-template-rows: repeat(4, 1fr);
+	height: 1.5rem;
+
+	button {
+		background-color: transparent;
+		border: none;
 	}
+`;
+
+const Span = styled.div`
+	display: flex;
+	flex-direction: column;
+	width: 9.5rem;
+`;
+
+const Button = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 2rem;
+
+	button {
+		background-color: transparent;
+		border: none;
+		font-size: 1.2rem;
+	}
+`;
+
+const Cal = styled.div`
+	position: absolute;
+	bottom: 0;
 `;
