@@ -1,9 +1,12 @@
 import React, { useEffect, useState, useContext } from "react";
+import { BrowserRouter, Route, Routes, Router } from "react-router-dom";
 import GlobalStyle from "./Globalstyle";
 import getMonth from "./GetMonth";
 import Month from "./Month";
-import Header from "./Header";
 import GlobalContext from "./context/Context";
+import Signup from "./Signup";
+import Login from "./Login";
+import LandingPage from "./LandingPage";
 
 const App = () => {
 	const [currentMonth, setCurrentMonth] = useState(getMonth());
@@ -14,11 +17,15 @@ const App = () => {
 	}, [monthIndex]);
 
 	return (
-		<>
+		<BrowserRouter>
 			<GlobalStyle />
-			<Header />
-			<Month month={currentMonth} />
-		</>
+			<Routes>
+				<Route path="/" element={<LandingPage />} />
+				<Route path="/login" element={<Login />} />
+				<Route path="/signup" element={<Signup />} />
+				<Route path="/home" element={<Month month={currentMonth} />} />
+			</Routes>
+		</BrowserRouter>
 	);
 };
 

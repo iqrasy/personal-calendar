@@ -1,37 +1,41 @@
 import React from "react";
 import styled from "styled-components";
+import Header from "./Header";
 import dayjs from "dayjs";
 import Sidebar from "./Sidebar";
 
 const Month = ({ month }) => {
 	return (
-		<First>
-			<Side>
-				<Sidebar />
-			</Side>
-			<Div>
-				{month.map((item, i) => (
-					<Main key={i}>
-						{item.map((day, id) => (
-							<Second key={id}>
-								{i === 0 && (
-									<Rows>
-										<p>{day.format("ddd").toUpperCase()}</p>
-									</Rows>
-								)}
-								{day.format("DD-MM-YY") === dayjs().format("DD-MM-YY") ? (
-									<Blue>
+		<>
+			<Header />
+			<First>
+				<Side>
+					<Sidebar />
+				</Side>
+				<Div>
+					{month.map((item, i) => (
+						<Main key={i}>
+							{item.map((day, id) => (
+								<Second key={id}>
+									{i === 0 && (
+										<Rows>
+											<p>{day.format("ddd").toUpperCase()}</p>
+										</Rows>
+									)}
+									{day.format("DD-MM-YY") === dayjs().format("DD-MM-YY") ? (
+										<Blue>
+											<p>{day.format("DD")}</p>
+										</Blue>
+									) : (
 										<p>{day.format("DD")}</p>
-									</Blue>
-								) : (
-									<p>{day.format("DD")}</p>
-								)}
-							</Second>
-						))}
-					</Main>
-				))}
-			</Div>
-		</First>
+									)}
+								</Second>
+							))}
+						</Main>
+					))}
+				</Div>
+			</First>
+		</>
 	);
 };
 

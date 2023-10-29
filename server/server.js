@@ -1,10 +1,12 @@
 const express = require("express");
+const cors = require('cors')
 
 const PORT = 8000;
 const app = express();
 const pool = require("./db");
 
 app
+	.use(cors())
 	.use(express.json())
 	.get("/", (req, res) => {
 		res.send("hello");
@@ -17,6 +19,22 @@ app
 			res.json(rows);
 		} catch (error) {
 			console.log(error);
+		}
+	})
+
+	.post("/login", async (req, res) => {
+		const { username, password } = req.body;
+		try {
+			const query = "SELECT * FROM users WHERE username = $1 AND password = $2";
+			const result = await pool.query(query, [username, password]);
+			console.log(result.rows);
+			if (result.rows.length === 0) {
+				return res.status(401).json({ message: "Authentication failed" });
+			}
+			res.json({ message: "Login successful", data: result.rows });
+		} catch (error) {
+			console.error("Database error:", error);
+			res.status(500).json({ message: "Internal server error" });
 		}
 	})
 
