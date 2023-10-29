@@ -1,5 +1,5 @@
 const express = require("express");
-const cors = require('cors')
+const cors = require("cors");
 
 const PORT = 8000;
 const app = express();
@@ -12,7 +12,7 @@ app
 		res.send("hello");
 	})
 
-	// get all todo's
+	// get all events
 	.get("/events", async (req, res) => {
 		try {
 			const { rows } = await pool.query("SELECT * FROM events");
@@ -22,6 +22,7 @@ app
 		}
 	})
 
+	// login
 	.post("/login", async (req, res) => {
 		const { username, password } = req.body;
 		try {
@@ -38,6 +39,7 @@ app
 		}
 	})
 
+	// create new event
 	.post("/events", async (req, res) => {
 		const { start_datetime, end_datetime, title, description, location } =
 			req.body;
@@ -52,6 +54,7 @@ app
 		}
 	})
 
+	// uodate the created event
 	.put("/events/:id", async (req, res) => {
 		const eventId = req.params.id;
 		const { start_datetime, end_datetime, title, description, location } =
@@ -75,6 +78,7 @@ app
 		}
 	})
 
+	// delete the created event
 	.delete("/events/:id", async (req, res) => {
 		const eventId = req.params.id;
 

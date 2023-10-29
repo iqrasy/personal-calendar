@@ -21,6 +21,7 @@ const Login = () => {
 			if (response.ok) {
 				localStorage.setItem("user", JSON.stringify(username));
 				setLoggedin(true);
+				navigate("/home");
 				setUsername("");
 				setPassword("");
 			} else {
@@ -30,7 +31,6 @@ const Login = () => {
 			console.error("Login error:", error);
 		}
 	};
-	console.log(username);
 
 	const handleLogout = () => {
 		setLoggedin(false);
@@ -60,7 +60,6 @@ const Login = () => {
 						onChange={(e) => setPassword(e.target.value)}
 					/>
 					<button onClick={handleLogin}>Login</button>
-					<button onClick={() => navigate("/signup")}>Signup</button>
 				</div>
 			)}
 		</div>
