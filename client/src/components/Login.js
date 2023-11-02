@@ -8,7 +8,8 @@ const Login = () => {
 	const [error, setError] = useState(null);
 	const navigate = useNavigate();
 
-	const handleLogin = async () => {
+	const handleLogin = async (e) => {
+		e.preventDefault()
 		try {
 			const response = await fetch("http://localhost:8000/login", {
 				method: "POST",
@@ -47,19 +48,21 @@ const Login = () => {
 				<div>
 					<h2>Login</h2>
 					{error && <div>{error}</div>}
-					<input
-						type="text"
-						placeholder="Username"
-						value={username}
-						onChange={(e) => setUsername(e.target.value)}
-					/>
-					<input
-						type="password"
-						placeholder="Password"
-						value={password}
-						onChange={(e) => setPassword(e.target.value)}
-					/>
-					<button onClick={handleLogin}>Login</button>
+					<form>
+						<input
+							type="text"
+							placeholder="Username"
+							value={username}
+							onChange={(e) => setUsername(e.target.value)}
+						/>
+						<input
+							type="password"
+							placeholder="Password"
+							value={password}
+							onChange={(e) => setPassword(e.target.value)}
+						/>
+						<button onClick={handleLogin}>Login</button>
+					</form>
 				</div>
 			)}
 		</div>

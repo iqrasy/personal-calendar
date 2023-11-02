@@ -52,7 +52,7 @@ app
 				[email, username, hashedPass]
 			);
 			const user = signup.rows[0];
-			const token = jwt.sign({ email }, password, { expiresIn: "5hr" });
+			const token = jwt.sign({ email }, "secret", { expiresIn: "5hr" });
 
 			console.log(user, token);
 			res
