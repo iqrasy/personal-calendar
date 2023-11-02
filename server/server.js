@@ -1,9 +1,10 @@
 const express = require("express");
 const cors = require("cors");
-
+const bcrypt = require("bcrypt");
 const PORT = 8000;
 const app = express();
 const pool = require("./db");
+const jwt = require("jsonwebtoken");
 
 app
 	.use(cors())
@@ -28,11 +29,35 @@ app
 		try {
 			const query = "SELECT * FROM users WHERE username = $1 AND password = $2";
 			const result = await pool.query(query, [username, password]);
-			console.log(result.rows);
-			if (result.rows.length === 0) {
-				return res.status(401).json({ message: "Authentication failed" });
+			// console.log(result.rows);
+
+			if (result.rows.length !== 0) {
+				res.json({ message: "Login successful", data: result.rows });
+			} else {
+				res.json({ message: "Authentication Failed" });
 			}
-			res.json({ message: "Login successful", data: result.rows });
+		} catch (error) {
+			console.error("Database error:", error);
+			res.status(500).json({ message: "Internal server error" });
+		}
+	})
+
+	.post("/signup", async (req, res) => {
+		const { email, username, password } = req.body;
+		const saltRounds = 10;
+		try {
+			const hashedPass = await bcrypt.hash(password, saltRounds);
+			const signup = await pool.query(
+				"INSERT INTO users (email, username, password) VALUES($1, $2, $3) RETURNING *",
+				[email, username, hashedPass]
+			);
+			const user = signup.rows[0];
+			const token = jwt.sign({ email }, password, { expiresIn: "5hr" });
+
+			console.log(user, token);
+			res
+				.status(201)
+				.json({ message: "Signup successful", data: { user, token } });
 		} catch (error) {
 			console.error("Database error:", error);
 			res.status(500).json({ message: "Internal server error" });

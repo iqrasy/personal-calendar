@@ -1,7 +1,5 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import Login from "./Login";
-import Signup from "./Signup";
 
 const LandingPage = () => {
 	const navigate = useNavigate();
