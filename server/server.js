@@ -5,22 +5,13 @@ const PORT = 8000;
 const app = express();
 const pool = require("./db");
 const jwt = require("jsonwebtoken");
+const uuid4 = require("uuid4");
 
 app
 	.use(cors())
 	.use(express.json())
 	.get("/", (req, res) => {
 		res.send("hello");
-	})
-
-	// get all events
-	.get("/events", async (req, res) => {
-		try {
-			const { rows } = await pool.query("SELECT * FROM events");
-			res.json(rows);
-		} catch (error) {
-			console.log(error);
-		}
 	})
 
 	// login
@@ -42,6 +33,7 @@ app
 		}
 	})
 
+	// signup
 	.post("/signup", async (req, res) => {
 		const { email, username, password } = req.body;
 		const saltRounds = 10;
@@ -64,18 +56,54 @@ app
 		}
 	})
 
+	// get all events for user logged in
+	.get("/events/user/:userId", async (req, res) => {
+		const userId = req.params.userId;
+		try {
+			const query = await pool.query(
+				"SELECT * FROM events WHERE user_id = $1",
+				[userId]
+			);
+			console.log(query);
+			res
+				.status(200)
+				.json({ message: "Events retrieved successfully", data: query.rows });
+		} catch (error) {
+			console.error("Database error:", error);
+			res.status(500).json({ message: "Internal server error" });
+		}
+	})
+
 	// create new event
 	.post("/events", async (req, res) => {
-		const { start_datetime, end_datetime, title, description, location } =
-			req.body;
+		const {
+			start_datetime,
+			end_datetime,
+			title,
+			description,
+			location,
+			category_id,
+			user_id,
+		} = req.body;
+
 		try {
-			const query =
-				"INSERT INTO events (start_datetime, end_datetime, title, description, location) VALUES ($1, $2, $3, $4, $5)";
-			await pool.query(query, values);
-			console.log(query);
-			res.status(201).json({ message: "Event Created" });
+			const query = await pool.query(
+				"INSERT INTO events ( start_datetime, end_datetime, title, description, location, category_id, user_id) VALUES ($1, $2, $3, $4, $5,  $6, $7)",
+				[
+					start_datetime,
+					end_datetime,
+					title,
+					description,
+					location,
+					category_id,
+					user_id,
+				]
+			);
+
+			res.status(201).json({ message: "Event Created", data: query });
 		} catch (error) {
-			console.log(error);
+			console.error("Database error:", error);
+			res.status(500).json({ message: "Internal server error" });
 		}
 	})
 
@@ -99,7 +127,8 @@ app
 			await pool.query(query, values);
 			res.json({ message: "Event updated" });
 		} catch (error) {
-			res.status(500).json({ error: "Internal Server Error" });
+			console.error("Database error:", error);
+			res.status(500).json({ message: "Internal server error" });
 		}
 	})
 
@@ -113,7 +142,8 @@ app
 			await pool.query(query, values);
 			res.json({ message: "Event deleted" });
 		} catch (error) {
-			res.status(500).json({ error: "Internal Server Error" });
+			console.error("Database error:", error);
+			res.status(500).json({ message: "Internal server error" });
 		}
 	})
 

@@ -41,7 +41,7 @@ const Signup = () => {
 		<div>
 			{isLoggedin ? (
 				<div>
-					<h2>Sign up</h2>
+					<h2>Welcome {username}</h2>
 					<button onClick={handleLogout}>Logout</button>
 				</div>
 			) : (

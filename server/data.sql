@@ -7,15 +7,10 @@ CREATE TABLE events (
     title VARCHAR(100) NOT NULL,
     description TEXT,
     location VARCHAR(100),
-    repeat_id INT REFERENCES repeat_options(id),
     category_id INT REFERENCES categories(id),
     user_id INT REFERENCES users(id)
 );
 
-CREATE TABLE repeat_options (
-    id SERIAL PRIMARY KEY,
-    option_name VARCHAR(50) NOT NULL
-);
 
 CREATE TABLE categories (
     id SERIAL PRIMARY KEY,
