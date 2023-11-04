@@ -7,6 +7,7 @@ const Events = () => {
 		title: "",
 		description: "",
 		location: "",
+		category_id: "",
 	});
 
 	const handleInput = (e) => {
@@ -18,7 +19,7 @@ const Events = () => {
 		e.preventDefault();
 
 		try {
-			const response = await fetch("/events", {
+			const response = await fetch("http://localhost:3000/events", {
 				method: "POST",
 				headers: {
 					"Content-type": "application/json",
@@ -88,6 +89,9 @@ const Events = () => {
 						onChange={handleInput}
 					/>
 				</div>
+				<select>
+					<option>{formData.category_id}</option>
+				</select>
 				<button type="submit">Create Event</button>
 			</form>
 		</div>

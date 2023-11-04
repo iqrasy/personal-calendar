@@ -4,12 +4,12 @@ import { useNavigate } from "react-router-dom";
 const Login = () => {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
-	const [isLoggedin, setLoggedin] = useState(false);
+	const [isLoggedin, setLoggedin] = useState(!!localStorage.getItem("user"));
 	const [error, setError] = useState(null);
 	const navigate = useNavigate();
 
 	const handleLogin = async (e) => {
-		e.preventDefault()
+		e.preventDefault();
 		try {
 			const response = await fetch("http://localhost:8000/login", {
 				method: "POST",
@@ -33,9 +33,6 @@ const Login = () => {
 		}
 	};
 
-	const handleLogout = () => {
-		setLoggedin(false);
-	};
 
 	return (
 		<div>

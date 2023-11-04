@@ -33,10 +33,6 @@ const Signup = () => {
 		}
 	};
 
-	const handleLogout = () => {
-		setLoggedin(false);
-	};
-
 	return (
 		<div>
 			{isLoggedin ? (
