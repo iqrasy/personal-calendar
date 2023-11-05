@@ -2,8 +2,8 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 import GlobalContext from "./context/Context";
 import dayjs from "dayjs";
-import Calendar from "./Calendar";
-import Events from "./Events";
+import SmallCalendar from "./SmallCalendar";
+import Form from "./Form";
 
 const Sidebar = () => {
 	const { monthIndex, setMonthIndex } = useContext(GlobalContext);
@@ -19,8 +19,8 @@ const Sidebar = () => {
 	return (
 		<Main>
 			<button onClick={handleReset}>Today</button>
-			<Events />
-			<Calendar />
+			<Form />
+			<SmallCalendar />
 		</Main>
 	);
 };

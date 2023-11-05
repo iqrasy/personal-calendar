@@ -5,7 +5,7 @@ import GlobalContext from "./context/Context";
 import dayjs from "dayjs";
 import getMonth from "./GetMonth";
 
-const Calendar = () => {
+const SmallCalendar = () => {
 	const [currentMonthIndex, setCurrentMonthIndex] = useState(dayjs().month());
 	const [currentMonth, setCurrentMonth] = useState(getMonth());
 	const { monthIndex, setSmallCalendar, selectedDay, setSelectedDay } =
@@ -97,7 +97,7 @@ const Calendar = () => {
 	);
 };
 
-export default Calendar;
+export default SmallCalendar;
 
 const Div = styled.div`
 	display: grid;

@@ -1,6 +1,20 @@
 "use strict";
 const pool = require("./db");
 
+// GET ALL CATEGORIES
+const getAllCategories = async (req, res) => {
+	try {
+		const query = await pool.query("SELECT * FROM categories");
+
+		res
+			.status(200)
+			.json({ message: "Events retrieved successfully", data: query });
+	} catch (error) {
+		console.error("Database error:", error);
+		res.status(500).json({ message: "Internal server error" });
+	}
+};
+
 // CREATE NEW CATEHGORY
 const createCategory = async (req, res) => {
 	const { category_name } = req.body;
@@ -58,4 +72,9 @@ const deleteCategory = async (req, res) => {
 	}
 };
 
-module.exports = { createCategory, updateCategory, deleteCategory };
+module.exports = {
+	createCategory,
+	updateCategory,
+	deleteCategory,
+	getAllCategories,
+};

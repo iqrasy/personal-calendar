@@ -27,21 +27,12 @@ const createEvents = async (req, res) => {
 		description,
 		location,
 		category_id,
-		user_id,
 	} = req.body;
 
 	try {
 		const query = await pool.query(
-			"INSERT INTO events ( start_datetime, end_datetime, title, description, location, category_id, user_id) VALUES ($1, $2, $3, $4, $5,  $6, $7)",
-			[
-				start_datetime,
-				end_datetime,
-				title,
-				description,
-				location,
-				category_id,
-				user_id,
-			]
+			"INSERT INTO events ( start_datetime, end_datetime, title, description, location, category_id) VALUES ($1, $2, $3, $4, $5,  $6)",
+			[start_datetime, end_datetime, title, description, location, category_id]
 		);
 
 		res.status(201).json({ message: "Event Created", data: query });

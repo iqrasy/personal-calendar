@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import Category from "./Category";
 
-const Events = () => {
+const Form = () => {
 	const [formData, setFormData] = useState({
 		start_datetime: "",
 		end_datetime: "",
@@ -19,7 +20,7 @@ const Events = () => {
 		e.preventDefault();
 
 		try {
-			const response = await fetch("http://localhost:3000/events", {
+			const response = await fetch("http://localhost:8000/events", {
 				method: "POST",
 				headers: {
 					"Content-type": "application/json",
@@ -31,10 +32,11 @@ const Events = () => {
 				const data = await response.json();
 				console.log(data);
 			} else {
-				console.error("Event creation failed");
+				const errorData = await response.json();
+				console.error("Event creation failed:", errorData.message);
 			}
 		} catch (error) {
-			console.log(error);
+			console.error("Fetch error:", error);
 		}
 	};
 
@@ -49,7 +51,7 @@ const Events = () => {
 						name="start_datetime"
 						value={formData.start_datetime}
 						onChange={handleInput}
-						required
+						// required
 					/>
 				</div>
 				<div>
@@ -59,7 +61,7 @@ const Events = () => {
 						name="end_datetime"
 						value={formData.end_datetime}
 						onChange={handleInput}
-						required
+						// required
 					/>
 				</div>
 				<div>
@@ -69,7 +71,7 @@ const Events = () => {
 						name="title"
 						value={formData.title}
 						onChange={handleInput}
-						required
+						// required
 					/>
 				</div>
 				<div>
@@ -89,13 +91,11 @@ const Events = () => {
 						onChange={handleInput}
 					/>
 				</div>
-				<select>
-					<option>{formData.category_id}</option>
-				</select>
 				<button type="submit">Create Event</button>
 			</form>
+			<Category formData={formData} setFormData={setFormData} />
 		</div>
 	);
 };
 
-export default Events;
+export default Form;

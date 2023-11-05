@@ -33,6 +33,11 @@ const Login = () => {
 		}
 	};
 
+	const handleLogout = () => {
+		localStorage.removeItem("user");
+		setLoggedin(false);
+		navigate("/");
+	};
 
 	return (
 		<div>

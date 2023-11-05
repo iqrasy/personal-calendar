@@ -8,6 +8,7 @@ const {
 	deleteEvents,
 } = require("./Events");
 const {
+	getAllCategories,
 	createCategory,
 	updateCategory,
 	deleteCategory,
@@ -34,6 +35,7 @@ app
 	.post("/events", createEvents)
 
 	// CATEGORY
+	.get("/allCategory", getAllCategories)
 	.post("/category", createCategory)
 	.put("/category/:categoryId", updateCategory)
 	.delete("/category/:categoryId", deleteCategory)
