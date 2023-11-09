@@ -1,15 +1,8 @@
-import React, { useState, useEffect } from "react";
-import Category from "./Category";
+import React, { useContext } from "react";
+import GlobalContext from "./context/Context";
 
 const Form = () => {
-	const [formData, setFormData] = useState({
-		start_datetime: "",
-		end_datetime: "",
-		title: "",
-		description: "",
-		location: "",
-		category_id: "",
-	});
+	const { formData, setFormData, categoryId } = useContext(GlobalContext);
 
 	const handleInput = (e) => {
 		const { name, value } = e.target;
@@ -42,58 +35,93 @@ const Form = () => {
 
 	return (
 		<div>
-			<h1>Create Event</h1>
-			<form onSubmit={handleSubmit}>
-				<div>
-					<input
-						placeholder="Start Date and Time"
-						type="datetime-local"
-						name="start_datetime"
-						value={formData.start_datetime}
-						onChange={handleInput}
-						// required
-					/>
+			<div
+				className="modal fade"
+				id="formModal"
+				tabIndex="-1"
+				role="dialog"
+				aria-labelledby="exampleModalLabel"
+				aria-hidden="true"
+			>
+				<div className="modal-dialog" role="document">
+					<div className="modal-content">
+						<div className="modal-header">
+							<h5>Form</h5>
+							<button
+								type="button"
+								className="close"
+								data-dismiss="modal"
+								aria-label="Close"
+							>
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div className="modal-body">
+							<form onSubmit={handleSubmit}>
+								<div>
+									<input
+										placeholder="Start Date and Time"
+										type="datetime-local"
+										name="start_datetime"
+										value={formData.start_datetime}
+										onChange={handleInput}
+										// required
+									/>
+								</div>
+								<div>
+									<input
+										placeholder="End Date and Time"
+										type="datetime-local"
+										name="end_datetime"
+										value={formData.end_datetime}
+										onChange={handleInput}
+										// required
+									/>
+								</div>
+								<div>
+									<input
+										placeholder="Title"
+										type="text"
+										name="title"
+										value={formData.title}
+										onChange={handleInput}
+										// required
+									/>
+								</div>
+								<div>
+									<textarea
+										placeholder="Description"
+										name="description"
+										value={formData.description}
+										onChange={handleInput}
+									/>
+								</div>
+								<div>
+									<input
+										placeholder="Location"
+										type="text"
+										name="location"
+										value={formData.location}
+										onChange={handleInput}
+									/>
+								</div>
+								<button type="submit">Create Event</button>
+							</form>
+						</div>
+						<div className="modal-footer">
+							<button
+								type="button"
+								className="close"
+								data-dismiss="modal"
+								aria-label="Close"
+								// onClick={handleModal}
+							>
+								Done
+							</button>
+						</div>
+					</div>
 				</div>
-				<div>
-					<input
-						placeholder="End Date and Time"
-						type="datetime-local"
-						name="end_datetime"
-						value={formData.end_datetime}
-						onChange={handleInput}
-						// required
-					/>
-				</div>
-				<div>
-					<input
-						placeholder="Title"
-						type="text"
-						name="title"
-						value={formData.title}
-						onChange={handleInput}
-						// required
-					/>
-				</div>
-				<div>
-					<textarea
-						placeholder="Description"
-						name="description"
-						value={formData.description}
-						onChange={handleInput}
-					/>
-				</div>
-				<div>
-					<input
-						placeholder="Location"
-						type="text"
-						name="location"
-						value={formData.location}
-						onChange={handleInput}
-					/>
-				</div>
-				<button type="submit">Create Event</button>
-			</form>
-			<Category formData={formData} setFormData={setFormData} />
+			</div>
 		</div>
 	);
 };

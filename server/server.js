@@ -30,15 +30,15 @@ app
 
 	// EVENTS
 	.get("/events/user/:userId", getAllEventsForUser)
+	.post("/events", createEvents)
 	.put("/events/:eventId", updateEvents)
 	.delete("/events/:eventId", deleteEvents)
-	.post("/events", createEvents)
 
 	// CATEGORY
-	.get("/allCategory", getAllCategories)
+	.get("/categories/user/:userId", getAllCategories)
 	.post("/category", createCategory)
-	.put("/category/:categoryId", updateCategory)
-	.delete("/category/:categoryId", deleteCategory)
+	.put("/category", updateCategory)
+	.delete("/category", deleteCategory)
 
 	.get("*", (req, res) => {
 		res.status(404).json({

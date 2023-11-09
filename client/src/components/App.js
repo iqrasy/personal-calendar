@@ -23,7 +23,7 @@ const App = () => {
 				<Route path="/" element={<LandingPage />} />
 				<Route path="/login" element={<Login />} />
 				<Route path="/signup" element={<Signup />} />
-				<Route path="/home" element={<Month month={currentMonth} />} />
+				<Route path="/home/:userId" element={<Month month={currentMonth} />} />
 			</Routes>
 		</BrowserRouter>
 	);

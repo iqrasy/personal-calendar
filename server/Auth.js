@@ -1,19 +1,19 @@
-"use strict"
+"use strict";
 const bcrypt = require("bcrypt");
 const pool = require("./db");
 const jwt = require("jsonwebtoken");
 
 // LOGIN
 const login = async (req, res) => {
-	const { username, password } = req.body;
+	const { email, password } = req.body;
 	try {
-		const query = "SELECT * FROM users WHERE username = $1 AND password = $2";
-		const result = await pool.query(query, [username, password]);
-
+		const query = "SELECT * FROM users WHERE email = $1 AND password = $2";
+		const result = await pool.query(query, [email, password]);
+		console.log(result);
 		if (result.rows.length !== 0) {
 			res.json({ message: "Login successful", data: result.rows });
 		} else {
-			res.json({ message: "Authentication Failed" });
+			res.status(500).json({ message: "Authentication Failed" });
 		}
 	} catch (error) {
 		console.error("Database error:", error);

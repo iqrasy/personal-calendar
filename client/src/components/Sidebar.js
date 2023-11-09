@@ -4,6 +4,7 @@ import GlobalContext from "./context/Context";
 import dayjs from "dayjs";
 import SmallCalendar from "./SmallCalendar";
 import Form from "./Form";
+import Category from "./Category";
 
 const Sidebar = () => {
 	const { monthIndex, setMonthIndex } = useContext(GlobalContext);
@@ -19,7 +20,8 @@ const Sidebar = () => {
 	return (
 		<Main>
 			<button onClick={handleReset}>Today</button>
-			<Form />
+			<Category />
+			{/* <Form /> */}
 			<SmallCalendar />
 		</Main>
 	);

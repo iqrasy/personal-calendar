@@ -1,27 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { useParams } from "react-router-dom";
+import { FiEdit2 } from "react-icons/fi";
+import { AiOutlineDelete, AiOutlinePlus } from "react-icons/ai";
+import Modal from "./Modal";
+import GlobalContext from "./context/Context";
 
-
-// const handleAddCategory = () => {
-// 	addCategory(categoryName);
-// 	setCategoryName("");
-// 	closeModal();
-// };
-
-// const handleUpdateCategory = () => {
-// 	updateCategory(categoryId, categoryName);
-// 	setCategoryName("");
-// 	closeModal();
-// };
-
-// const handleDeleteCategory = () => {
-// 	deleteCategory(categoryId);
-// 	closeModal();
-// };
-
-const Category = ({ formData, setFormData }) => {
-	const [categories, setCategories] = useState([]);
-	const [categoryName, setCategoryName] = useState("");
-	const [categoryId, setCategoryId] = useState(null);
+const Category = () => {
+	const { userId } = useParams();
+	const {
+		categories,
+		setCategories,
+		categoryName,
+		setCategoryName,
+		categoryId,
+		setCategoryId,
+		formData,
+		setFormData,
+	} = useContext(GlobalContext);
+	const [action, setAction] = useState(null);
 
 	const handleInput = (e) => {
 		const { name, value } = e.target;
@@ -29,12 +25,14 @@ const Category = ({ formData, setFormData }) => {
 	};
 
 	// GET ALL CATEGORIES
-	const handleGetCategories = async (setCategories) => {
+	const handleGetCategories = async () => {
 		try {
-			const response = await fetch("http://localhost:8000/allCategory");
+			const response = await fetch(
+				`http://localhost:8000/categories/user/${userId}`
+			);
 			if (response.ok) {
 				const data = await response.json();
-				setCategories(data.data.rows);
+				setCategories(data.data);
 			} else {
 				const errorData = await response.json();
 				console.error("Event creation failed:", errorData.message);
@@ -52,10 +50,10 @@ const Category = ({ formData, setFormData }) => {
 				headers: {
 					"Content-type": "application/json",
 				},
-				body: JSON.stringify({ category_name: categoryName }),
+				body: JSON.stringify({ category_name: categoryName, user_id: userId }),
 			});
 			if (response.ok) {
-				setCategoryName(""); // Clear the input field
+				setCategoryName("");
 				handleGetCategories(setCategories);
 			} else {
 				const errorData = await response.json();
@@ -68,19 +66,29 @@ const Category = ({ formData, setFormData }) => {
 
 	// UPDATE CATEGORIES
 	const updateCategory = async (categoryId, newCategoryName) => {
+		console.log("categoryId:", categories[0].id);
+		console.log("newCategoryName:", newCategoryName);
 		try {
-			const response = await fetch(
-				`http://localhost:8000/category/${categoryId}`,
-				{
-					method: "PUT",
-					headers: {
-						"Content-type": "application/json",
-					},
-					body: JSON.stringify({ category_name: newCategoryName }),
-				}
-			);
+			const response = await fetch("http://localhost:8000/category", {
+				method: "PUT",
+				headers: {
+					"Content-type": "application/json",
+				},
+				body: JSON.stringify({
+					category_name: newCategoryName,
+					categoryId: categoryId,
+				}),
+			});
 
 			if (response.ok) {
+				const updatedCategories = categories.map((category) => {
+					if (category.id === categoryId) {
+						return { ...category, category_name: newCategoryName };
+					}
+					return category;
+				});
+				setCategories(updatedCategories);
+				setCategoryId(null);
 				handleGetCategories();
 			} else {
 				const errorData = await response.json();
@@ -94,14 +102,19 @@ const Category = ({ formData, setFormData }) => {
 	// DELETE CATEGORIES
 	const deleteCategory = async (categoryId) => {
 		try {
-			const response = await fetch(
-				`http://localhost:8000/category/${categoryId}`,
-				{
-					method: "DELETE",
-				}
-			);
+			const response = await fetch("http://localhost:8000/category", {
+				method: "DELETE",
+				headers: {
+					"Content-type": "application/json",
+				},
+				body: JSON.stringify({
+					categoryId,
+				}),
+			});
 
 			if (response.ok) {
+				const data = await response.json();
+				setCategoryId(null);
 				handleGetCategories();
 			} else {
 				const errorData = await response.json();
@@ -116,68 +129,72 @@ const Category = ({ formData, setFormData }) => {
 		handleGetCategories(setCategories);
 	}, []);
 
+	const handleModalAction = (action) => {
+		setAction(action);
+		setCategoryName("");
+	};
+
+	const handleModal = () => {
+		switch (action) {
+			case "Add Category":
+				addCategory();
+				break;
+			case "Update Category":
+				updateCategory(categoryId, categoryName);
+				break;
+			case "Delete Category":
+				deleteCategory(categoryId);
+				break;
+			default:
+				break;
+		}
+	};
+
 	return (
 		<div>
-			<select
-				name="category_id"
-				value={formData.category_id}
-				onChange={handleInput}
-			>
-				<option value="">Select a category</option>
-				{categories.map((category) => (
-					<option key={category.id} value={category.id}>
-						{category.category_name}
-					</option>
-				))}
-			</select>
 			<div>
-				<button
-					className="btn btn-primary"
-					data-toggle="modal"
-					data-target="#exampleModal"
-				>
-					Add Category
-				</button>
-				<div
-					className="modal fade"
-					id="exampleModal"
-					tabIndex="-1"
-					role="dialog"
-					aria-labelledby="exampleModalLabel"
-					aria-hidden="true"
-				>
-					<div className="modal-dialog" role="document">
-						<div className="modal-content">
-							<div className="modal-header">
-								<button
-									type="button"
-									className="close"
-									data-dismiss="modal"
-									aria-label="Close"
-								>
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<div className="modal-body">
-								<input
-									placeholder="Add Category"
-									value={categoryName}
-									onChange={(e) => setCategoryName(e.target.value)}
-								/>
-							</div>
-							<div className="modal-footer">
-								<button
-									type="button"
-									className="close"
-									data-dismiss="modal"
-									aria-label="Close"
-									onClick={addCategory}
-								>
-									Save changes
-								</button>
-							</div>
+				<div value={formData.category_id} onChange={handleInput} required>
+					{categories.map((category) => (
+						<div key={category.id}>
+							<input key={category.id} value={category.id} type="checkbox" />
+							<span>{category.category_name}</span>
+							<button
+								data-toggle="modal"
+								data-target="#exampleModal"
+								onClick={() => {
+									setCategoryId(category.id);
+									handleModalAction("Update Category");
+								}}
+							>
+								<FiEdit2 />
+							</button>
+							<button
+								data-toggle="modal"
+								data-target="#exampleModal"
+								onClick={() => {
+									setCategoryId(category.id);
+									handleModalAction("Delete Category");
+								}}
+							>
+								<AiOutlineDelete />
+							</button>
 						</div>
-					</div>
+					))}
+				</div>
+				<div>
+					<button
+						data-toggle="modal"
+						data-target="#categoryModal"
+						onClick={() => handleModalAction("Add Category")}
+					>
+						<AiOutlinePlus />
+					</button>
+					<Modal
+						categoryName={categoryName}
+						setCategoryName={setCategoryName}
+						handleModal={handleModal}
+						action={action}
+					/>
 				</div>
 			</div>
 		</div>

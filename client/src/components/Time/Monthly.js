@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const Monthly = () => {
-  return (
-    <div>Monthly</div>
-  )
-}
+	return <div>Monthly</div>;
+};
 
-export default Monthly
+export default Monthly;

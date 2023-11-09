@@ -9,6 +9,8 @@ const Header = () => {
 	const { monthIndex, setMonthIndex } = useContext(GlobalContext);
 	const [isLoggedin, setLoggedin] = useState(!!localStorage.getItem("user"));
 	const navigate = useNavigate();
+	const userString = localStorage.getItem("user");
+	const user = userString ? JSON.parse(userString) : null;
 
 	const handlePrevMonth = () => {
 		setMonthIndex(monthIndex - 1);
@@ -24,9 +26,9 @@ const Header = () => {
 		navigate("/");
 	};
 
-
 	return (
 		<Div>
+			{user ? <h1>Welcome {user.username}</h1> : <h1>Welcome</h1>}
 			<button>Day</button>
 			<button>week</button>
 			<button>month</button>
@@ -37,9 +39,7 @@ const Header = () => {
 			<button onClick={handleNextMonth}>
 				<BiRightArrow />
 			</button>
-			<button onClick={handleLogout}>
-				{isLoggedin ? <p>Logout</p> : ""}
-			</button>
+			<button onClick={handleLogout}>{isLoggedin ? <p>Logout</p> : ""}</button>
 			<h2>{dayjs(new Date(dayjs().year(), monthIndex)).format("MMMM YYYY")}</h2>
 		</Div>
 	);
