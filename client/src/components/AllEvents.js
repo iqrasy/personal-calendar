@@ -3,24 +3,16 @@ import { useParams } from "react-router-dom";
 
 const AllEvents = () => {
 	const [allEvents, setAllEvents] = useState("");
-	const { id } = useParams();
-	// console.log(id);
-	// const user = localStorage.getItem("user");
-	// const email = user.userEmail;
-	// console.log(user);
+	const { userId } = useParams();
 
-	const handleEvents = async (e) => {
-		e.preventDefault();
+	const handleEvents = async () => {
 		try {
 			const response = await fetch(
-				`http://localhost:8000/getAllEventsForUser/${id}`
+				`http://localhost:8000/events/user/${userId}`
 			);
 			if (response.ok) {
-				const data = await response.json();
-				setAllEvents(data);
-				// console.log(data);
-				// console.log("Events retrieved successfully:", data);
-				// Handle the retrieved data, e.g., set it in your component state.
+				const result = await response.json();
+				setAllEvents(result.data);
 			} else {
 				console.error("Failed to retrieve events:", response.statusText);
 			}
@@ -28,7 +20,24 @@ const AllEvents = () => {
 			console.error("Fetch error:", error);
 		}
 	};
-	return <div>AllEvents</div>;
+
+	useEffect(() => {
+		handleEvents();
+	}, []);
+
+	return (
+		<div>
+			{allEvents.map((event) => (
+				<div key={event.id}>
+					<h3>{event.title}</h3>
+					<p>Start Date: {event.start_datetime}</p>
+					<p>End Date: {event.end_datetime}</p>
+					<p>Description: {event.description}</p>
+					<p>Location: {event.location}</p>
+				</div>
+			))}
+		</div>
+	);
 };
 
 export default AllEvents;

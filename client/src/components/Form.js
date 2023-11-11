@@ -106,18 +106,18 @@ const Form = () => {
 									/>
 								</div>
 								<button type="submit">Create Event</button>
+								<div className="modal-footer">
+									<button
+										type="button"
+										className="close"
+										data-dismiss="modal"
+										aria-label="Close"
+										// onClick={handleModal}
+									>
+										Done
+									</button>
+								</div>
 							</form>
-						</div>
-						<div className="modal-footer">
-							<button
-								type="button"
-								className="close"
-								data-dismiss="modal"
-								aria-label="Close"
-								// onClick={handleModal}
-							>
-								Done
-							</button>
 						</div>
 					</div>
 				</div>
