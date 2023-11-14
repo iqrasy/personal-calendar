@@ -9,6 +9,7 @@ const Wrapper = (props) => {
 	const [categoryName, setCategoryName] = useState("");
 	const [categoryId, setCategoryId] = useState(null);
 	const [categories, setCategories] = useState([]);
+	// const [isFormOpen, setIsFormOpen] = useState(false);
 	const [formData, setFormData] = useState({
 		start_datetime: "",
 		end_datetime: "",
@@ -41,6 +42,8 @@ const Wrapper = (props) => {
 				setCategories,
 				formData,
 				setFormData,
+				// isFormOpen,
+				// setIsFormOpen,
 			}}
 		>
 			{props.children}

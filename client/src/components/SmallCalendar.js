@@ -3,7 +3,7 @@ import { BiRightArrow, BiLeftArrow } from "react-icons/bi";
 import styled from "styled-components";
 import GlobalContext from "./context/Context";
 import dayjs from "dayjs";
-import getMonth from "./GetMonth";
+import getMonth from "../components/getData/GetMonth";
 
 const SmallCalendar = () => {
 	const [currentMonthIndex, setCurrentMonthIndex] = useState(dayjs().month());

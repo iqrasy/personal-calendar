@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import GlobalContext from "./context/Context";
 
 const Form = () => {
-	const { formData, setFormData, categoryId } = useContext(GlobalContext);
+	const { formData, setFormData } = useContext(GlobalContext);
 
 	const handleInput = (e) => {
 		const { name, value } = e.target;

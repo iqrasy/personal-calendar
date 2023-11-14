@@ -21,6 +21,8 @@ const GlobalContext = React.createContext({
 	setCategories: () => {},
 	formData: [],
 	setFormData: () => {},
+	// isFormOpen: [],
+	// setIsFormOpen: [],
 });
 
 export default GlobalContext;

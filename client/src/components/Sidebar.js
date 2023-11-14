@@ -3,7 +3,6 @@ import styled from "styled-components";
 import GlobalContext from "./context/Context";
 import dayjs from "dayjs";
 import SmallCalendar from "./SmallCalendar";
-import Form from "./Form";
 import Category from "./Category";
 
 const Sidebar = () => {
@@ -21,8 +20,7 @@ const Sidebar = () => {
 		<Main>
 			<button onClick={handleReset}>Today</button>
 			<Category />
-			{/* <Form /> */}
-			<SmallCalendar />
+			{/* <SmallCalendar /> */}
 		</Main>
 	);
 };

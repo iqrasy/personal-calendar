@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import Header from "../Header";
 import dayjs from "dayjs";
-import getMonth from "../GetMonth";
+import getMonth from "../getData/GetMonth";
 import GlobalContext from "../context/Context";
 import Form from "../Form";
 import { useParams } from "react-router-dom";
@@ -125,7 +125,6 @@ const Blue = styled.div`
 		z-index: 10;
 	}
 `;
-
 
 const First = styled.div`
 	margin-top: 4rem;

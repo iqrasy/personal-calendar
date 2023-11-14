@@ -1,5 +1,4 @@
 import dayjs from "dayjs";
-import React from "react";
 
 const getMonth = (month = dayjs().month()) => {
 	month = Math.floor(month);
