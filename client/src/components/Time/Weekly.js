@@ -6,6 +6,7 @@ import Form from "../Form";
 const Weekly = () => {
 	const [currentWeek, setCurrentWeek] = useState([]);
 	const [isFormOpen, setIsFormOpen] = useState(false);
+	const [selectedDateTime, setSelectedDateTime] = useState(null);
 	const [is24HourFormat, setIs24HourFormat] = useState(true);
 
 	useEffect(() => {
@@ -29,9 +30,9 @@ const Weekly = () => {
 		setIs24HourFormat((prevFormat) => !prevFormat);
 	};
 
-	const handleDoubleClick = () => {
+	const handleDoubleClick = (day, date, hour) => {
+		setSelectedDateTime({ day, date, hour });
 		setIsFormOpen(true);
-		// console.log(isFormOpen);
 	};
 
 	return (
@@ -71,7 +72,7 @@ const Weekly = () => {
 					))}
 				</Main>
 			</WeeklyContainer>
-			{isFormOpen && <Form />}
+			{isFormOpen && <Form selectedDateTime={selectedDateTime} />}
 		</>
 	);
 };
@@ -130,8 +131,8 @@ const Date = styled.div`
 	}
 
 	button {
-    padding: 0;
-    margin: 0;
+		padding: 0;
+		margin: 0;
 		border: 1px solid #ccc;
 		text-align: center;
 		cursor: pointer;

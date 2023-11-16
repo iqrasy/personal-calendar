@@ -1,8 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import GlobalContext from "./context/Context";
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
 
-const Form = () => {
+const Form = ({ isOpen, setIsOpen }) => {
 	const { formData, setFormData } = useContext(GlobalContext);
+	console.log(formData);
 
 	const handleInput = (e) => {
 		const { name, value } = e.target;
@@ -31,97 +34,85 @@ const Form = () => {
 		} catch (error) {
 			console.error("Fetch error:", error);
 		}
+		setIsOpen(false);
 	};
+
+	useEffect(() => {
+		const currentDate = new Date().toISOString().slice(0, 16);
+		setFormData({
+			...formData,
+			start_datetime: currentDate,
+			end_datetime: currentDate,
+		});
+	}, []);
 
 	return (
 		<div>
-			<div
-				className="modal fade"
-				id="formModal"
-				tabIndex="-1"
-				role="dialog"
-				aria-labelledby="exampleModalLabel"
-				aria-hidden="true"
+			<Popup
+				open={isOpen}
+				closeOnDocumentClick
+				onClose={() => setIsOpen(false)}
 			>
-				<div className="modal-dialog" role="document">
-					<div className="modal-content">
-						<div className="modal-header">
-							<h5>Form</h5>
+				<div>
+					<form onSubmit={handleSubmit}>
+						<div>
+							<input
+								placeholder="Start Date and Time"
+								type="datetime-local"
+								name="start_datetime"
+								value={formData.start_datetime}
+								onChange={handleInput}
+							/>
+						</div>
+						<div>
+							<input
+								placeholder="End Date and Time"
+								type="datetime-local"
+								name="end_datetime"
+								value={formData.end_datetime}
+								onChange={handleInput}
+							/>
+						</div>
+						<div>
+							<input
+								placeholder="Title"
+								type="text"
+								name="title"
+								value={formData.title}
+								onChange={handleInput}
+							/>
+						</div>
+						<div>
+							<textarea
+								placeholder="Description"
+								name="description"
+								value={formData.description}
+								onChange={handleInput}
+							/>
+						</div>
+						<div>
+							<input
+								placeholder="Location"
+								type="text"
+								name="location"
+								value={formData.location}
+								onChange={handleInput}
+							/>
+						</div>
+						<button type="submit">Create Event</button>
+						<div className="modal-footer">
 							<button
 								type="button"
 								className="close"
 								data-dismiss="modal"
 								aria-label="Close"
 							>
-								<span aria-hidden="true">&times;</span>
+								Done
 							</button>
 						</div>
-						<div className="modal-body">
-							<form onSubmit={handleSubmit}>
-								<div>
-									<input
-										placeholder="Start Date and Time"
-										type="datetime-local"
-										name="start_datetime"
-										value={formData.start_datetime}
-										onChange={handleInput}
-										// required
-									/>
-								</div>
-								<div>
-									<input
-										placeholder="End Date and Time"
-										type="datetime-local"
-										name="end_datetime"
-										value={formData.end_datetime}
-										onChange={handleInput}
-										// required
-									/>
-								</div>
-								<div>
-									<input
-										placeholder="Title"
-										type="text"
-										name="title"
-										value={formData.title}
-										onChange={handleInput}
-										// required
-									/>
-								</div>
-								<div>
-									<textarea
-										placeholder="Description"
-										name="description"
-										value={formData.description}
-										onChange={handleInput}
-									/>
-								</div>
-								<div>
-									<input
-										placeholder="Location"
-										type="text"
-										name="location"
-										value={formData.location}
-										onChange={handleInput}
-									/>
-								</div>
-								<button type="submit">Create Event</button>
-								<div className="modal-footer">
-									<button
-										type="button"
-										className="close"
-										data-dismiss="modal"
-										aria-label="Close"
-										// onClick={handleModal}
-									>
-										Done
-									</button>
-								</div>
-							</form>
-						</div>
-					</div>
+					</form>
 				</div>
-			</div>
+			</Popup>
 		</div>
 	);
 };
