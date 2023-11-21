@@ -19,7 +19,7 @@ const getAllEventsForUser = async (req, res) => {
 
 // CREATE NEW EVENT
 const createEvents = async (req, res) => {
-	const userId = req.params.userId
+	const user_id = req.params.user_id;
 	const {
 		start_datetime,
 		end_datetime,
@@ -27,7 +27,6 @@ const createEvents = async (req, res) => {
 		description,
 		location,
 		category_id,
-		user_id, // Change this to user_id
 	} = req.body;
 
 	try {
@@ -53,7 +52,6 @@ const createEvents = async (req, res) => {
 
 // UPDATE EVENT
 const updateEvents = async (req, res) => {
-	const eventId = req.params.eventId;
 	const {
 		start_datetime,
 		end_datetime,
@@ -61,12 +59,12 @@ const updateEvents = async (req, res) => {
 		description,
 		location,
 		category_id,
-		user_id, // Change this to user_id
+		eventId,
 	} = req.body;
 
 	try {
 		const query = await pool.query(
-			"UPDATE events SET start_datetime = $1, end_datetime = $2, title = $3, description = $4, location = $5, category_id = $6 WHERE id = $7 AND user_id = $8 RETURNING *",
+			"UPDATE events SET start_datetime = $1, end_datetime = $2, title = $3, description = $4, location = $5, category_id = $6 WHERE id = $7 RETURNING *",
 			[
 				start_datetime,
 				end_datetime,
@@ -75,7 +73,6 @@ const updateEvents = async (req, res) => {
 				location,
 				category_id,
 				eventId,
-				user_id,
 			]
 		);
 
@@ -88,15 +85,11 @@ const updateEvents = async (req, res) => {
 
 // DELETE EVENT
 const deleteEvents = async (req, res) => {
-	const eventId = req.params.eventId;
-	const user_id = req.body.user_id; // Extract user_id from the request, or pass it as a parameter
+	const { eventId } = req.body;
 
 	try {
-		const query = await pool.query(
-			"DELETE FROM events WHERE id=$1 AND user_id = $2",
-			[eventId, user_id]
-		);
-		res.json({ message: "Event deleted" });
+		const query = await pool.query("DELETE FROM events WHERE id=$1", [eventId]);
+		res.json({ message: "Event deleted", data: query });
 	} catch (error) {
 		console.error("Database error:", error);
 		res.status(500).json({ message: "Internal server error" });

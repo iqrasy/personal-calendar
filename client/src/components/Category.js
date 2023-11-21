@@ -20,8 +20,15 @@ const Category = () => {
 	const [action, setAction] = useState(null);
 
 	const handleInput = (e) => {
-		const { name, value } = e.target;
-		setFormData({ ...formData, [name]: value });
+		const { name, value, type, checked } = e.target;
+
+		if (type === "checkbox" && checked) {
+			setFormData({ ...formData, [name]: value });
+		} else if (type === "checkbox" && !checked) {
+			setFormData({ ...formData, [name]: null });
+		} else {
+			setFormData({ ...formData, [name]: value });
+		}
 	};
 
 	// GET ALL CATEGORIES
@@ -66,8 +73,6 @@ const Category = () => {
 
 	// UPDATE CATEGORIES
 	const updateCategory = async (categoryId, newCategoryName) => {
-		console.log("categoryId:", categories[0].id);
-		console.log("newCategoryName:", newCategoryName);
 		try {
 			const response = await fetch("http://localhost:8000/category", {
 				method: "PUT",
@@ -81,15 +86,8 @@ const Category = () => {
 			});
 
 			if (response.ok) {
-				const updatedCategories = categories.map((category) => {
-					if (category.id === categoryId) {
-						return { ...category, category_name: newCategoryName };
-					}
-					return category;
-				});
-				setCategories(updatedCategories);
-				setCategoryId(null);
 				handleGetCategories();
+				setCategoryId(null);
 			} else {
 				const errorData = await response.json();
 				console.error("Category update failed:", errorData.message);
@@ -126,7 +124,7 @@ const Category = () => {
 	};
 
 	useEffect(() => {
-		handleGetCategories(setCategories);
+		handleGetCategories();
 	}, []);
 
 	const handleModalAction = (action) => {
@@ -156,11 +154,19 @@ const Category = () => {
 				<div value={formData.category_id} onChange={handleInput} required>
 					{categories.map((category) => (
 						<div key={category.id}>
-							<input key={category.id} value={category.id} type="checkbox" />
+							<input
+								key={category.id}
+								value={category.id}
+								type="checkbox"
+								onChange={handleInput}
+								checked
+							/>
 							<span>{category.category_name}</span>
 							<button
+								type="button"
+								className="btn btn-primary"
 								data-toggle="modal"
-								data-target="#exampleModal"
+								data-target="#exampleModalCenter"
 								onClick={() => {
 									setCategoryId(category.id);
 									handleModalAction("Update Category");
@@ -169,8 +175,10 @@ const Category = () => {
 								<FiEdit2 />
 							</button>
 							<button
+								type="button"
+								className="btn btn-primary"
 								data-toggle="modal"
-								data-target="#exampleModal"
+								data-target="#exampleModalCenter"
 								onClick={() => {
 									setCategoryId(category.id);
 									handleModalAction("Delete Category");
@@ -184,7 +192,7 @@ const Category = () => {
 				<div>
 					<button
 						data-toggle="modal"
-						data-target="#categoryModal"
+						data-target="#exampleModalCenter"
 						onClick={() => handleModalAction("Add Category")}
 					>
 						<AiOutlinePlus />

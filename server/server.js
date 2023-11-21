@@ -30,9 +30,9 @@ app
 
 	// EVENTS
 	.get("/events/user/:userId", getAllEventsForUser)
-	.post("/events", createEvents)
-	.put("/events/:eventId", updateEvents)
-	.delete("/events/:eventId", deleteEvents)
+	.post("/events/:user_id", createEvents)
+	.put("/events", updateEvents)
+	.delete("/events", deleteEvents)
 
 	// CATEGORY
 	.get("/categories/user/:userId", getAllCategories)

@@ -1,19 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
+import { ColorPicker, useColor } from "react-color-palette";
+import "react-color-palette/css";
 
 const Modal = ({ categoryName, setCategoryName, handleModal, action }) => {
+	const [color, setColor] = useColor("#fff");
 	return (
 		<div
 			className="modal fade"
-			id="categoryModal"
+			id="exampleModalCenter"
 			tabIndex="-1"
 			role="dialog"
-			aria-labelledby="exampleModalLabel"
+			data-target="#exampleModalCenter"
 			aria-hidden="true"
 		>
-			<div className="modal-dialog" role="document">
+			<div className="modal-dialog modal-dialog-centered" role="document">
 				<div className="modal-content">
 					<div className="modal-header">
-						<h5>{action}</h5>
+						<h5 className="modal-title">{action}</h5>
+
 						<button
 							type="button"
 							className="close"
@@ -29,20 +33,34 @@ const Modal = ({ categoryName, setCategoryName, handleModal, action }) => {
 								Are you sure you want to delete the category: {categoryName}?
 							</p>
 						) : (
-							<input
-								placeholder="Category name"
-								value={categoryName}
-								onChange={(e) => setCategoryName(e.target.value)}
-							/>
+							<>
+								<input
+									placeholder="new category name"
+									value={categoryName}
+									onChange={(e) => setCategoryName(e.target.value)}
+								/>
+								<ColorPicker
+									hideInput={["rgb", "hsv"]}
+									color={color}
+									onChange={setColor}
+								/>
+							</>
+							// add color category
 						)}
 					</div>
 					<div className="modal-footer">
 						<button
 							type="button"
-							className="close"
+							className="btn btn-secondary"
 							data-dismiss="modal"
-							aria-label="Close"
+						>
+							Close
+						</button>
+						<button
 							onClick={handleModal}
+							type="button"
+							data-dismiss="modal"
+							className="btn btn-primary"
 						>
 							{action === "Delete Category" ? "Delete" : "Save changes"}
 						</button>

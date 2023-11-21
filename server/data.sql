@@ -8,7 +8,6 @@ CREATE TABLE events (
     description TEXT,
     location VARCHAR(100),
     category_id INT REFERENCES categories(id),
-    -- user_email INT REFERENCES users(email)
     user_id INT REFERENCES users(id)
 );
 

@@ -19,7 +19,7 @@ const GlobalContext = React.createContext({
 	setCategoryId: (index) => {},
 	categories: [],
 	setCategories: () => {},
-	formData: [],
+	formData: {},
 	setFormData: () => {},
 	// isFormOpen: [],
 	// setIsFormOpen: [],

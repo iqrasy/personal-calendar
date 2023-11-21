@@ -32,8 +32,6 @@ const AllEvents = () => {
 					<h3>{event.title}</h3>
 					<p>Start Date: {event.start_datetime}</p>
 					<p>End Date: {event.end_datetime}</p>
-					<p>Description: {event.description}</p>
-					<p>Location: {event.location}</p>
 				</div>
 			))}
 		</div>

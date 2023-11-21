@@ -2,30 +2,43 @@ import React, { useContext, useState, useEffect } from "react";
 import GlobalContext from "./context/Context";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
+import { useParams } from "react-router-dom";
 
 const Form = ({ isOpen, setIsOpen }) => {
-	const { formData, setFormData } = useContext(GlobalContext);
-	console.log(formData);
+	const { userId } = useParams();
+	const [selectedCategory, setSelectedCategory] = useState("");
+	const { formData, setFormData, categoryId, categoryName, categories } =
+		useContext(GlobalContext);
 
 	const handleInput = (e) => {
 		const { name, value } = e.target;
 		setFormData({ ...formData, [name]: value });
 	};
 
+	const handleCategoryChange = (e) => {
+		setSelectedCategory(e.target.value);
+		setFormData({ ...formData, categoryId: e.target.value });
+	};
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
 		try {
-			const response = await fetch("http://localhost:8000/events", {
+			const response = await fetch(`http://localhost:8000/events/${userId}`, {
 				method: "POST",
 				headers: {
 					"Content-type": "application/json",
 				},
-				body: JSON.stringify(formData),
+				body: JSON.stringify({
+					user_id: userId,
+					...formData,
+					category_id: selectedCategory,
+				}),
 			});
 
 			if (response.ok) {
 				const data = await response.json();
+				console.log(selectedCategory);
 				console.log(data);
 			} else {
 				const errorData = await response.json();
@@ -36,15 +49,6 @@ const Form = ({ isOpen, setIsOpen }) => {
 		}
 		setIsOpen(false);
 	};
-
-	useEffect(() => {
-		const currentDate = new Date().toISOString().slice(0, 16);
-		setFormData({
-			...formData,
-			start_datetime: currentDate,
-			end_datetime: currentDate,
-		});
-	}, []);
 
 	return (
 		<div>
@@ -99,17 +103,31 @@ const Form = ({ isOpen, setIsOpen }) => {
 								onChange={handleInput}
 							/>
 						</div>
-						<button type="submit">Create Event</button>
-						<div className="modal-footer">
-							<button
-								type="button"
-								className="close"
-								data-dismiss="modal"
-								aria-label="Close"
+						<div>
+							<select
+								name="category_id"
+								value={selectedCategory}
+								onChange={handleCategoryChange}
 							>
-								Done
-							</button>
+								<option value="" disabled>
+									Select a category
+								</option>
+								{categories.map((category) => (
+									<option key={category.id} value={category.id}>
+										{category.category_name}
+									</option>
+								))}
+							</select>
 						</div>
+						<button
+							type="submit"
+							className="close"
+							data-dismiss="modal"
+							aria-label="Close"
+						>
+							Create Event
+						</button>
+						<div className="modal-footer"></div>
 					</form>
 				</div>
 			</Popup>
