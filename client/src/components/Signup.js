@@ -47,12 +47,7 @@ const Signup = () => {
 
 	return (
 		<div>
-			{isLoggedin ? (
-				<div>
-					<h2>Welcome {username}</h2>
-					<button onClick={handleLogout}>Logout</button>
-				</div>
-			) : (
+			{isLoggedin && (
 				<div>
 					{error && <div>{error}</div>}
 					<form>

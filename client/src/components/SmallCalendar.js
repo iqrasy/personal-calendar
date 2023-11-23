@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { BiRightArrow, BiLeftArrow } from "react-icons/bi";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import styled from "styled-components";
 import GlobalContext from "./context/Context";
 import dayjs from "dayjs";
@@ -8,8 +8,7 @@ import getMonth from "../components/getData/GetMonth";
 const SmallCalendar = () => {
 	const [currentMonthIndex, setCurrentMonthIndex] = useState(dayjs().month());
 	const [currentMonth, setCurrentMonth] = useState(getMonth());
-	const { monthIndex, setSmallCalendar, selectedDay, setSelectedDay } =
-		useContext(GlobalContext);
+	const { monthIndex } = useContext(GlobalContext);
 
 	useEffect(() => {
 		setCurrentMonthIndex(monthIndex);
@@ -27,66 +26,41 @@ const SmallCalendar = () => {
 		setCurrentMonthIndex(currentMonthIndex + 1);
 	};
 
-	const toggleButton = (day) => {
-		const today = day.format("DD-MM-YY");
-		const daySelected = selectedDay && selectedDay.format("DD-MM-YY");
-
-		if (today === daySelected) {
-			return <div style={{ backgroundColor: "blue", color: "white" }}></div>;
-		} else {
-			return "";
-		}
-	};
-
 	return (
 		<div>
 			<Cal>
 				<Span>
 					<Button>
 						<button onClick={handlePrevMonth}>
-							<BiLeftArrow />
+							<IoIosArrowBack />
 						</button>
-						<p style={{ fontSize: "1.1rem" }}>
+						<p>
 							{dayjs(new Date(dayjs().year(), currentMonthIndex)).format(
 								"MMMM YYYY"
 							)}
 						</p>
 						<button onClick={handleNextMonth}>
-							<BiRightArrow />
+							<IoIosArrowForward />
 						</button>
 					</Button>
-					<div style={{ display: "flex", justifyContent: "space-between" }}>
+					<WeekNames>
 						{currentMonth[0].map((item, i) => (
-							<p key={i} style={{ marginBottom: "1rem" }}>
-								{item.format("dd").charAt(0)}
-							</p>
+							<p key={i}>{item.format("dd").charAt(0)}</p>
 						))}
-					</div>
+					</WeekNames>
 				</Span>
 				{currentMonth.map((calendar, i) => (
 					<Div key={i}>
 						{calendar.map((day, id) => (
 							<div key={id}>
 								{day.format("DD-MM-YY") === dayjs().format("DD-MM-YY") ? (
-									<button style={{ backgroundColor: "blue", color: "white" }}>
+									<button>
 										<p>{day.format("D")}</p>
 									</button>
 								) : (
-									<div>
-										<button
-											style={{
-												backgroundColor: toggleButton(day)
-													? "blue"
-													: "transparent",
-											}}
-											onClick={() => {
-												setSmallCalendar(currentMonthIndex);
-												setSelectedDay(day);
-											}}
-										>
-											<p>{day.format("D")}</p>
-										</button>
-									</div>
+									<Days>
+										<p>{day.format("D")}</p>
+									</Days>
 								)}
 							</div>
 						))}
@@ -106,8 +80,12 @@ const Div = styled.div`
 	height: 1.5rem;
 
 	button {
-		background-color: transparent;
-		border: none;
+		background-color: #977eb3;
+		margin: 0.2rem;
+		color: white;
+		border-radius: 1rem;
+		height: 1.5rem;
+		width: 1.5rem;
 	}
 `;
 
@@ -121,16 +99,44 @@ const Button = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	margin-bottom: 2rem;
+	width: 14rem;
+	margin-bottom: 1rem;
 
 	button {
 		background-color: transparent;
 		border: none;
 		font-size: 1.2rem;
+		color: white;
+		cursor: pointer;
+
+		&:focus {
+			outline: none;
+		}
+	}
+
+	p {
+		font-size: 1.2rem;
+		text-align: center;
+		width: 13rem;
+		margin: 1rem;
 	}
 `;
 
 const Cal = styled.div`
 	position: absolute;
-	bottom: 0;
+	top: 8.3rem;
+	background-color: #292929;
+	padding: 2rem;
+	border-radius: 1rem;
+	width: 25vh;
+`;
+
+const WeekNames = styled.div`
+	display: flex;
+	justify-content: space-between;
+	width: 13rem;
+`;
+
+const Days = styled.div`
+	padding: 0.3rem;
 `;

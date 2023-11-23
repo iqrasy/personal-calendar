@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
+import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { FiEdit2 } from "react-icons/fi";
 import { AiOutlineDelete, AiOutlinePlus } from "react-icons/ai";
+import { useColor } from "react-color-palette";
 import Modal from "./Modal";
 import GlobalContext from "./context/Context";
 
 const Category = () => {
 	const { userId } = useParams();
+	const [color, setColor] = useColor("#fff");
 	const {
 		categories,
 		setCategories,
@@ -150,10 +153,10 @@ const Category = () => {
 
 	return (
 		<div>
-			<div>
+			<Main>
 				<div value={formData.category_id} onChange={handleInput} required>
 					{categories.map((category) => (
-						<div key={category.id}>
+						<EditDelete key={category.id}>
 							<input
 								key={category.id}
 								value={category.id}
@@ -186,17 +189,17 @@ const Category = () => {
 							>
 								<AiOutlineDelete />
 							</button>
-						</div>
+						</EditDelete>
 					))}
 				</div>
 				<div>
-					<button
+					<Add
 						data-toggle="modal"
 						data-target="#exampleModalCenter"
 						onClick={() => handleModalAction("Add Category")}
 					>
 						<AiOutlinePlus />
-					</button>
+					</Add>
 					<Modal
 						categoryName={categoryName}
 						setCategoryName={setCategoryName}
@@ -204,9 +207,41 @@ const Category = () => {
 						action={action}
 					/>
 				</div>
-			</div>
+			</Main>
 		</div>
 	);
 };
 
 export default Category;
+
+const Main = styled.div`
+	background-color: #292929;
+	padding: 2rem;
+	border-radius: 1rem;
+	width: 25vh;
+`;
+
+const EditDelete = styled.div`
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	span {
+		margin-right: 5rem;
+	}
+
+	button {
+		background-color: transparent;
+		border: none;
+
+		&:hover {
+			background-color: rgb(151, 126, 179);
+		}
+	}
+`;
+
+const Add = styled.button`
+	background-color: transparent;
+	color: white;
+	border: none;
+`;

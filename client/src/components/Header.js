@@ -13,9 +13,7 @@ const Header = () => {
 	};
 
 	return (
-		<Div>
-			<button onClick={handleLogout}>{isLoggedin ? <p>Logout</p> : ""}</button>
-		</Div>
+		<Div>{isLoggedin && <button onClick={handleLogout}>Logout</button>}</Div>
 	);
 };
 

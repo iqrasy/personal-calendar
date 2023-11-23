@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ColorPicker, useColor } from "react-color-palette";
+import { ColorPicker, useColor, Saturation, Hue } from "react-color-palette";
 import "react-color-palette/css";
 
 const Modal = ({ categoryName, setCategoryName, handleModal, action }) => {
@@ -39,13 +39,14 @@ const Modal = ({ categoryName, setCategoryName, handleModal, action }) => {
 									value={categoryName}
 									onChange={(e) => setCategoryName(e.target.value)}
 								/>
+								{/* add color category */}
+
 								<ColorPicker
 									hideInput={["rgb", "hsv"]}
 									color={color}
 									onChange={setColor}
 								/>
 							</>
-							// add color category
 						)}
 					</div>
 					<div className="modal-footer">

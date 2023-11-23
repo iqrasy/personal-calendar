@@ -36,7 +36,7 @@ const Login = () => {
 
 			if (response.ok) {
 				const data = await response.json();
-				const user = data.data[0] ;
+				const user = data.data[0];
 				localStorage.setItem("user", JSON.stringify(user));
 				setLoggedin(true);
 
@@ -54,19 +54,9 @@ const Login = () => {
 		}
 	};
 
-	const handleLogout = () => {
-		localStorage.removeItem("user");
-		setLoggedin(false);
-		navigate("/");
-	};
-
 	return (
 		<div>
-			{isLoggedin ? (
-				<div>
-					<button onClick={handleLogout}>Logout</button>
-				</div>
-			) : (
+			{isLoggedin && (
 				<div>
 					<h2>Login</h2>
 					{error && <div>{error}</div>}

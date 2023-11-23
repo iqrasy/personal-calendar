@@ -36,6 +36,9 @@ html {
 body { 
     overflow-y: auto;
     height: 100vh;
+    /* background-color: #252422; */
+    background-color: #080708;
+
 }
 
 `;

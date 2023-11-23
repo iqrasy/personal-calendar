@@ -3,11 +3,11 @@ import styled from "styled-components";
 import GlobalContext from "./context/Context";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
-import Header from "./Header";
 import { useParams } from "react-router-dom";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import "./styles.css";
 import moment from "moment";
 import Form from "./Form";
 import dayjs from "dayjs";
@@ -132,14 +132,13 @@ const Month = () => {
 
 	return (
 		<>
-			<Header />
 			<First>
 				<h2>
 					{dayjs(new Date(dayjs().year(), monthIndex)).format("MMMM YYYY")}
 				</h2>
 				<Div>
 					<DndCalendar
-						views={["day", "agenda", "week", "month"]}
+						views={["month", "week", "day", "agenda"]}
 						selectable
 						resizable
 						defaultDate={new Date()}
@@ -152,6 +151,7 @@ const Month = () => {
 						onSelectSlot={handleSelectSlot}
 						onSelectEvent={handleSelectEvent}
 					/>
+
 					<Popup
 						open={isModalOpen}
 						closeOnDocumentClick
@@ -225,6 +225,7 @@ const First = styled.div`
 `;
 
 const Div = styled.div`
+	height: 55rem;
 	@media only screen and (max-width: 480px) {
 	}
 `;
