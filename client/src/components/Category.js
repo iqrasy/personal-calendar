@@ -219,13 +219,30 @@ const Main = styled.div`
 	padding: 2rem;
 	border-radius: 1rem;
 	width: 25vh;
+	position: relative;
+	top: 19.5rem;
+
+	@media only screen and (max-width: 480px) {
+		display: none;
+	}
+
+	@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
+		display: none;
+	}
+
+	@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+		width: 38vh;
+		position: relative;
+		bottom: 5rem;
+		padding: 2rem;
+		height: 20vh;
+	}
 `;
 
 const EditDelete = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-
 	span {
 		margin-right: 5rem;
 	}

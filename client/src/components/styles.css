@@ -107,12 +107,12 @@
 
 .rbc-time-content {
 	border-radius: 1rem;
-	height: 45rem;
+	height: 57vh;
 	flex: none;
 }
 
 .rbc-time-view {
-	height: 25rem;
+	height: 25vh;
 }
 
 .rbc-timeslot-group {
@@ -126,4 +126,172 @@
 
 .rbc-time-view .rbc-time-gutter {
 	color: rgba(149, 149, 149, 0.941);
+}
+
+/* rbc month view */
+
+.rbc-month-view {
+	background-color: white;
+	border-radius: 0.8rem;
+	height: 51rem;
+	flex: none;
+}
+
+.rbc-row .rbc-month-header,
+.rbc-header {
+	background-color: rgba(144, 144, 144, 0.4);
+	height: 3rem;
+	width: 4rem;
+	border-radius: 0.7rem;
+	margin: 0.2rem;
+	transition: background-color 0.3s ease;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.rbc-row-bg div:hover {
+	cursor: pointer;
+	box-shadow: none;
+	background-color: rgb(191, 171, 214);
+	color: #2c2c2c;
+	border-radius: 0.8rem;
+}
+
+.rbc-row-bg .rbc-off-range-bg {
+	background-color: transparent;
+	color: rgb(155, 133, 181);
+}
+
+.rbc-event,
+.rbc-day-slot .rbc-background-event {
+	background-color: #84c3fa;
+	border: none;
+}
+
+/* mobile */
+@media only screen and (max-width: 480px) {
+	.rbc-time-header-cell div {
+		height: 3rem;
+		margin: 0;
+		border-radius: 0.3rem;
+		background-color: transparent;
+	}
+
+	.rbc-header button span {
+		font-size: 0.6rem !important;
+	}
+
+	.rbc-time-content {
+		height: 55vh !important;
+		width: 45vh;
+	}
+
+	.rbc-timeslot-group {
+		font-size: 0.8rem;
+		margin-top: 0 !important;
+		border-bottom: solid rgba(196, 196, 196, 0.602) 1px;
+	}
+
+	.rbc-time-view {
+		height: 63vh;
+		flex: 0;
+	}
+
+	.rbc-calendar.rbc-addons-dnd {
+		height: 45rem !important;
+		display: block;
+	}
+
+	.rbc-btn-group button {
+		font-size: 0.7rem;
+		padding: 0.5rem;
+		margin: 0;
+		border-radius: 0.5rem;
+		outline: none;
+		border: none;
+		transition: background-color 0.3s ease;
+	}
+
+	.rbc-btn-group {
+		border-radius: 1rem;
+		background-color: rgba(144, 144, 144, 0.4);
+		padding: 0.2rem;
+		margin-top: 0.2rem;
+		width: 45vh;
+		text-align: center;
+	}
+
+	.rbc-toolbar-label {
+		display: none;
+	}
+	.rbc-toolbar {
+		justify-content: flex-start;
+		margin-left: 0.6rem;
+	}
+
+	.rbc-header + .rbc-today,
+	.rbc-time-header-cell div:hover {
+		color: rgb(151, 126, 179);
+		background-color: transparent;
+		box-shadow: none;
+	}
+
+	.rbc-time-header .rbc-overflowing {
+		border-right: none;
+		margin-right: 2rem !important;
+	}
+}
+
+/* iPad Portrait */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
+	.rbc-time-content {
+		height: 53vh !important;
+	}
+
+	.rbc-btn-group {
+		border-radius: 1rem;
+		background-color: rgba(144, 144, 144, 0.4);
+		padding: 0.2rem;
+		margin-top: 0.2rem;
+		width: 35vh;
+		text-align: center;
+	}
+
+	.rbc-toolbar {
+		justify-content: flex-end;
+	}
+
+	.rbc-toolbar-label {
+		display: none;
+	}
+}
+
+/* iPad Landscape */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+	.rbc-time-content {
+		height: 70vh !important;
+	}
+
+	.rbc-toolbar {
+		justify-content: flex-start;
+		margin-left: 5rem;
+	}
+
+	.rbc-toolbar-label {
+		display: none;
+	}
+
+	.rbc-btn-group {
+		border-radius: 1rem;
+		background-color: rgba(144, 144, 144, 0.4);
+		padding: 0.2rem;
+		margin-top: 0.2rem;
+		width: 48vh;
+		text-align: center;
+	}
+
+	.rbc-month-view {
+		height: 81vh;
+	}
 }

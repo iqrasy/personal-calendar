@@ -1,19 +1,14 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { CiGrid41 } from "react-icons/ci";
 
-const Header = () => {
-	const [isLoggedin, setLoggedin] = useState(!!localStorage.getItem("user"));
-	const navigate = useNavigate();
-
-	const handleLogout = () => {
-		localStorage.removeItem("user");
-		setLoggedin(false);
-		navigate("/");
-	};
-
+const Header = ({ isOpen, toggleSidebar }) => {
 	return (
-		<Div>{isLoggedin && <button onClick={handleLogout}>Logout</button>}</Div>
+		<Div>
+			<ToggleBtn onClick={toggleSidebar}>
+				<CiGrid41 />
+			</ToggleBtn>
+		</Div>
 	);
 };
 
@@ -23,4 +18,15 @@ const Div = styled.div`
 	/* @media only screen and (max-width: 480px) {
 		display: none;
 	} */
+`;
+
+const ToggleBtn = styled.button`
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	color: white;
+	margin-right: 1rem;
+	height: 3rem;
+	width: 3rem;
+	font-size: 2rem;
 `;

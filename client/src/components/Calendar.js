@@ -221,11 +221,36 @@ const Month = () => {
 export default Month;
 
 const First = styled.div`
-	margin-top: 4rem;
+	margin-top: 2rem;
+
+	@media only screen and (max-width: 480px) {
+		margin-top: 0.5rem;
+	}
+
+	@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait),
+		only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+		h2 {
+			width: 15rem;
+		}
+		margin-top: 0;
+	}
 `;
 
 const Div = styled.div`
-	height: 55rem;
+	height: 75vh;
+
 	@media only screen and (max-width: 480px) {
+		height: 73vh;
+		width: 45vh;
+	}
+
+	@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
+		min-height: 45vh;
+		max-height: 83vh;
+		width: 67vh;
+	}
+
+	@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+		height: 90vh;
 	}
 `;

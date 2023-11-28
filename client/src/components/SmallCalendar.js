@@ -124,11 +124,20 @@ const Button = styled.div`
 
 const Cal = styled.div`
 	position: absolute;
-	top: 8.3rem;
+	top: 6rem;
 	background-color: #292929;
 	padding: 2rem;
 	border-radius: 1rem;
 	width: 25vh;
+
+	@media only screen and (max-width: 480px) {
+		display: none;
+	}
+
+	@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+		width: 38vh;
+		top: 4.6rem;
+	}
 `;
 
 const WeekNames = styled.div`

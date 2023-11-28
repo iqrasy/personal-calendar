@@ -12,34 +12,33 @@ html {
     scroll-behavior: smooth;
 }
 
+body { 
+    overflow-y: hidden;
+    height: 100vh;
+    background-color: #080708;
+}
+
 ::-webkit-scrollbar {
   width: 0.4rem;
   height: 1rem;
 
 }
 ::-webkit-scrollbar-track {
-  background: #343541;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: rgba(217,217,227,.8);
-  border-color: rgba(255,255,255);
-  border-radius: 1rem;
-  border-width: 1px;
+  background-color: transparent;
+  /* border-color: rgba(255,255,255);
+  border-width: 1px; */
 }
 
 ::-webkit-scrollbar-thumb:hover {
+  border-radius: 1rem;
     background-color: rgba(217,217,227,.9);
 
 }
 
-body { 
-    overflow-y: auto;
-    height: 100vh;
-    /* background-color: #252422; */
-    background-color: #080708;
-
-}
 
 `;
 
