@@ -2,8 +2,8 @@
 
 I've developed my own version of a calendar where you can plan out your day, week, and year. The Modern Calendar App is a feature-rich, user-friendly calendar application designed to streamline your scheduling and organization needs. It offers a seamless and intuitive experience with a React-based frontend and a powerful backend powered by Node.js, Express, and PostgreSQL.
 
-![](mainPage.png)
-![](LandingPage.png)
+![Main Page](client/src/assets/mainPage.png)
+![Landing Page](client/src/assets/LandingPage.png)
 
 # 🛠️ set-up
 
