@@ -32,7 +32,7 @@ const signup = async (req, res) => {
 			[email, username, hashedPass]
 		);
 		const user = signup.rows[0];
-		const token = jwt.sign({ email }, "secret", { expiresIn: "never" });
+		const token = jwt.sign({ email }, "secret", { expiresIn: "30d" });
 
 		res
 			.status(201)

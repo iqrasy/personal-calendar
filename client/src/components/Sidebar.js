@@ -42,7 +42,7 @@ export default Sidebar;
 const Main = styled.div`
 	display: block;
 	@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
-		display: ${(props) => (props.isOpen ? "block" : "none")};
+		/* display: ${(props) => (props.isOpen ? "block" : "none")}; */
 	}
 `;
 
@@ -52,7 +52,7 @@ const Cat = styled.div`
 
 const Logout = styled.div`
 	position: absolute;
-	bottom: 28rem;
+	bottom: 2.4rem;
 
 	button {
 		background-color: transparent;

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { BsEyeSlash, BsEye } from "react-icons/bs";
+import styled from "styled-components";
 
 const Login = () => {
 	const [cookies, setCookie] = useCookies(null);
@@ -56,9 +57,8 @@ const Login = () => {
 
 	return (
 		<div>
-			{isLoggedin && (
-				<div>
-					<h2>Login</h2>
+			{!isLoggedin && (
+				<Main>
 					{error && <div>{error}</div>}
 					<form>
 						<input
@@ -79,15 +79,56 @@ const Login = () => {
 							value={password}
 							onChange={(e) => setPassword(e.target.value)}
 						/>
-						<button onClick={handleShowPassword}>
+						<ShowPass onClick={handleShowPassword}>
 							{passType === "password" ? <BsEyeSlash /> : <BsEye />}
-						</button>
-						<button onClick={handleLogin}>Login</button>
+						</ShowPass>
+						<Log onClick={handleLogin}>Login</Log>
 					</form>
-				</div>
+				</Main>
 			)}
 		</div>
 	);
 };
 
 export default Login;
+
+const Main = styled.div`
+	color: white;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	height: 100vh;
+
+	form {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin-top: 1rem;
+	}
+
+	input {
+		border: solid white 1px;
+		border-radius: 0.5rem;
+		padding: 1rem;
+		margin-bottom: 1rem;
+	}
+`;
+
+const Log = styled.button`
+	border: solid white 1px;
+	background-color: transparent;
+	color: white;
+	padding: 0.5rem 5rem;
+	border-radius: 0.4rem;
+`;
+
+const ShowPass = styled.button`
+	position: relative;
+	bottom: 3.5rem;
+	left: 5rem;
+	width: 2rem;
+	border: none;
+	background-color: transparent;
+`;

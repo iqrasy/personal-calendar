@@ -3,13 +3,12 @@ import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { FiEdit2 } from "react-icons/fi";
 import { AiOutlineDelete, AiOutlinePlus } from "react-icons/ai";
-import { useColor } from "react-color-palette";
 import Modal from "./Modal";
 import GlobalContext from "./context/Context";
 
 const Category = () => {
 	const { userId } = useParams();
-	const [color, setColor] = useColor("#fff");
+	
 	const {
 		categories,
 		setCategories,

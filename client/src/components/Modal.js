@@ -1,9 +1,8 @@
-import React, { useState } from "react";
-import { ColorPicker, useColor, Saturation, Hue } from "react-color-palette";
+import React from "react";
 import "react-color-palette/css";
+import styled from "styled-components";
 
 const Modal = ({ categoryName, setCategoryName, handleModal, action }) => {
-	const [color, setColor] = useColor("#fff");
 	return (
 		<div
 			className="modal fade"
@@ -13,11 +12,10 @@ const Modal = ({ categoryName, setCategoryName, handleModal, action }) => {
 			data-target="#exampleModalCenter"
 			aria-hidden="true"
 		>
-			<div className="modal-dialog modal-dialog-centered" role="document">
+			<Main className="modal-dialog modal-dialog-centered" role="document">
 				<div className="modal-content">
 					<div className="modal-header">
 						<h5 className="modal-title">{action}</h5>
-
 						<button
 							type="button"
 							className="close"
@@ -39,37 +37,57 @@ const Modal = ({ categoryName, setCategoryName, handleModal, action }) => {
 									value={categoryName}
 									onChange={(e) => setCategoryName(e.target.value)}
 								/>
-								{/* add color category */}
-
-								<ColorPicker
-									hideInput={["rgb", "hsv"]}
-									color={color}
-									onChange={setColor}
-								/>
 							</>
 						)}
 					</div>
 					<div className="modal-footer">
-						<button
+						<Close
 							type="button"
 							className="btn btn-secondary"
 							data-dismiss="modal"
 						>
 							Close
-						</button>
-						<button
+						</Close>
+						<Save
 							onClick={handleModal}
 							type="button"
 							data-dismiss="modal"
 							className="btn btn-primary"
 						>
 							{action === "Delete Category" ? "Delete" : "Save changes"}
-						</button>
+						</Save>
 					</div>
 				</div>
-			</div>
+			</Main>
 		</div>
 	);
 };
 
 export default Modal;
+
+const Main = styled.div`
+	/* background-color: rgba(0, 0, 0, 0.5); */
+	border-radius: 1rem;
+	padding: 20px;
+	max-width: 40vh;
+	margin: 20px auto;
+	/* box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); */
+
+	input {
+		border-radius: 0.4rem;
+		padding: 0.4rem;
+	}
+`;
+
+const Close = styled.button`
+	background-color: transparent;
+	color: black;
+	padding: 0.8rem;
+	border-radius: 0.5rem;
+`;
+
+const Save = styled.button`
+	background-color: black;
+	padding: 0.8rem;
+	border-radius: 0.5rem;
+`;
