@@ -19,7 +19,11 @@ const Home = () => {
 			<Main>
 				{isOpen && (
 					<Side>
-						<Sidebar />
+						<Sidebar
+							isOpen={isOpen}
+							toggleSidebar={toggleSidebar}
+							setIsOpen={setIsOpen}
+						/>
 					</Side>
 				)}
 				<BigCalDiv>
@@ -39,15 +43,19 @@ const Main = styled.div`
 
 const Side = styled.div`
 	margin-left: 0.4rem;
-	width: 25rem;
+	width: 30vh;
 	margin-top: 3rem;
 	color: white;
 	border-radius: 1.2rem;
-	border: solid red 1px;
+	/* border: solid red 1px; */
 
 	@media only screen and (max-width: 480px),
-		(min-device-width: 480px) and (max-device-width: 1024px) and (orientation: portrait) {
+		(min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
 		display: none;
+	}
+	@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+		width: 52vh;
+		height: 97.5vh;
 	}
 `;
 

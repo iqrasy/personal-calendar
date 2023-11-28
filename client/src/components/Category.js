@@ -233,7 +233,7 @@ const Main = styled.div`
 	@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
 		width: 38vh;
 		position: relative;
-		bottom: 5rem;
+		bottom: 7rem;
 		padding: 2rem;
 		height: 20vh;
 	}

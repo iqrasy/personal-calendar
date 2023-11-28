@@ -14,11 +14,7 @@ const Header = ({ isOpen, toggleSidebar }) => {
 
 export default Header;
 
-const Div = styled.div`
-	/* @media only screen and (max-width: 480px) {
-		display: none;
-	} */
-`;
+const Div = styled.div``;
 
 const ToggleBtn = styled.button`
 	background: transparent;

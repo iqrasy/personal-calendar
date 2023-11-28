@@ -128,6 +128,14 @@
 	color: rgba(149, 149, 149, 0.941);
 }
 
+.rbc-day-slot .rbc-event,
+.rbc-day-slot .rbc-background-event {
+	border: none;
+	border-radius: 1rem;
+	padding: 0.5rem;
+	background-color: #2e3437;
+}
+
 /* rbc month view */
 
 .rbc-month-view {
@@ -165,7 +173,11 @@
 
 .rbc-event,
 .rbc-day-slot .rbc-background-event {
-	background-color: #84c3fa;
+	background-color: #2e3437;
+	border: none;
+}
+
+.rbc-agenda-view table.rbc-agenda-table {
 	border: none;
 }
 

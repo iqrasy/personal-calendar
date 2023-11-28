@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import SmallCalendar from "./SmallCalendar";
 import Category from "./Category";
 
-const Sidebar = () => {
+const Sidebar = ({ isOpen, toggleSidebar, setIsOpen }) => {
 	const [isLoggedin, setLoggedin] = useState(!!localStorage.getItem("user"));
 	const navigate = useNavigate();
 
@@ -13,8 +13,17 @@ const Sidebar = () => {
 		setLoggedin(false);
 		navigate("/");
 	};
+
+	useEffect(() => {
+		const isPortrait =
+			window.matchMedia("(orientation: portrait)").matches &&
+			window.innerWidth <= 1024;
+
+		setIsOpen(!isPortrait);
+	}, [setIsOpen]);
+
 	return (
-		<Main>
+		<Main isOpen={isOpen}>
 			<SmallCal>
 				<SmallCalendar />
 			</SmallCal>
@@ -32,13 +41,13 @@ export default Sidebar;
 
 const Main = styled.div`
 	display: block;
+	@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+		display: ${(props) => (props.isOpen ? "block" : "none")};
+	}
 `;
 
 const Cat = styled.div`
 	position: absolute;
-
-	@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
-	}
 `;
 
 const Logout = styled.div`
@@ -62,7 +71,7 @@ const Logout = styled.div`
 	}
 
 	@media only screen and (max-width: 480px) {
-		/* display: none; */
+		display: none;
 	}
 `;
 
@@ -70,6 +79,6 @@ const SmallCal = styled.div`
 	@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
 	}
 	@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
-		display: none;
+		/* display: none; */
 	}
 `;

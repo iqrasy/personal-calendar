@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import GlobalContext from "./context/Context";
+import styled from "styled-components";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import { useParams } from "react-router-dom";
@@ -52,15 +53,15 @@ const Form = ({ isOpen, setIsOpen }) => {
 
 	return (
 		<div>
-			<Popup
+			<StyledPopup
 				open={isOpen}
 				closeOnDocumentClick
 				onClose={() => setIsOpen(false)}
 			>
 				<div>
-					<form onSubmit={handleSubmit}>
+					<Div onSubmit={handleSubmit}>
 						<div>
-							<input
+							<Input
 								placeholder="Start Date and Time"
 								type="datetime-local"
 								name="start_datetime"
@@ -69,7 +70,7 @@ const Form = ({ isOpen, setIsOpen }) => {
 							/>
 						</div>
 						<div>
-							<input
+							<Input
 								placeholder="End Date and Time"
 								type="datetime-local"
 								name="end_datetime"
@@ -78,7 +79,7 @@ const Form = ({ isOpen, setIsOpen }) => {
 							/>
 						</div>
 						<div>
-							<input
+							<Input
 								placeholder="Title"
 								type="text"
 								name="title"
@@ -87,7 +88,7 @@ const Form = ({ isOpen, setIsOpen }) => {
 							/>
 						</div>
 						<div>
-							<textarea
+							<TextArea
 								placeholder="Description"
 								name="description"
 								value={formData.description}
@@ -95,7 +96,7 @@ const Form = ({ isOpen, setIsOpen }) => {
 							/>
 						</div>
 						<div>
-							<input
+							<Input
 								placeholder="Location"
 								type="text"
 								name="location"
@@ -103,7 +104,7 @@ const Form = ({ isOpen, setIsOpen }) => {
 								onChange={handleInput}
 							/>
 						</div>
-						<div>
+						<Cats>
 							<select
 								name="category_id"
 								value={selectedCategory}
@@ -118,21 +119,84 @@ const Form = ({ isOpen, setIsOpen }) => {
 									</option>
 								))}
 							</select>
-						</div>
-						<button
+						</Cats>
+						<Button
 							type="submit"
 							className="close"
 							data-dismiss="modal"
 							aria-label="Close"
 						>
 							Create Event
-						</button>
+						</Button>
 						<div className="modal-footer"></div>
-					</form>
+					</Div>
 				</div>
-			</Popup>
+			</StyledPopup>
 		</div>
 	);
 };
 
 export default Form;
+
+const StyledPopup = styled(Popup)`
+	&-overlay {
+		background-color: rgba(0, 0, 0, 0.5);
+	}
+
+	&-content {
+		background-color: #fff;
+		border-radius: 8px;
+		padding: 20px;
+		max-width: 400px;
+		margin: 20px auto;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	}
+`;
+
+const Input = styled.input`
+	margin: 0.34rem;
+	width: 25vh;
+	border-radius: 0.4rem;
+	padding: 0.4rem;
+	border: solid grey 0.5px;
+`;
+
+const Div = styled.form`
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-top: 3rem;
+`;
+
+const TextArea = styled.textarea`
+	margin: 0.34rem;
+	width: 25vh;
+	border-radius: 0.4rem;
+	padding: 0.4rem;
+	border: solid grey 0.5px;
+`;
+
+const Cats = styled.div`
+	select {
+		width: 25vh;
+		margin: 0.34rem;
+		border-radius: 0.4rem;
+		padding: 0.4rem;
+		border: solid grey 0.5px;
+	}
+`;
+
+const Button = styled.button`
+	margin-top: 5rem;
+	font-size: 1.3rem;
+	/*
+	margin-bottom: 3rem; */
+
+	&:hover {
+		padding: 0.5rem;
+		border-radius: 0.5rem;
+		background-color: grey;
+		transition: background-color ease 1s;
+	}
+`;
