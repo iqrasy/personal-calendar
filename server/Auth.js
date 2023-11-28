@@ -9,7 +9,7 @@ const login = async (req, res) => {
 	try {
 		const query = "SELECT * FROM users WHERE email = $1 AND password = $2";
 		const result = await pool.query(query, [email, password]);
-		console.log(result);
+
 		if (result.rows.length !== 0) {
 			res.json({ message: "Login successful", data: result.rows });
 		} else {
@@ -32,7 +32,7 @@ const signup = async (req, res) => {
 			[email, username, hashedPass]
 		);
 		const user = signup.rows[0];
-		const token = jwt.sign({ email }, "secret", { expiresIn: "5hr" });
+		const token = jwt.sign({ email }, "secret", { expiresIn: "never" });
 
 		res
 			.status(201)
